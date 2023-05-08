@@ -22,7 +22,7 @@ const Up = () => {
                     />
                     {file}
                     <Uploader file={file} name={name} setFile={setFile} setName={setName} label="Add File" setShow={setShow} />
-                    {show && <ShowArticle name={name}></ShowArticle>}
+                    {show && <ShowArticle name={name} ></ShowArticle>}
                     {err && err}
                 </form>
             </div>

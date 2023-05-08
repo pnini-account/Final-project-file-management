@@ -4,7 +4,7 @@ class FolderController {
 
     getAllFolders = async (req, res) => {
         // Get all notes from DB
-        res.send(await folderDal.getAllFolders());
+        res.send(await folderDal.getAllFoldersForUser());
     }
     
     addNewFolder = async(req, res) => {
@@ -20,7 +20,7 @@ class FolderController {
     getFolderByParentId = async(req, res) => {
        const id = req.params.id;
        console.log(id)
-       res.json(await folderDal.getFolderByParentId(id));
+       res.json(await folderDal.getFoldersByParentId(id));
     }
 
     updateFolder = async(req, res) => {

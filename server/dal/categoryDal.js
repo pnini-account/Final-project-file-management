@@ -46,7 +46,7 @@ class CategoryDataAccessor {
         return category;
     }
 
-    updateCategory = async (id ,newid, color, img, text ) => {
+    updateCategory = async (id , color, img, text ) => {
         const category = await Category.update({newid, color, img, text  }, { where: { id: id } })
         if (!category) {
             return res.status(400).json({ message: 'folder not found' })

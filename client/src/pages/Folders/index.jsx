@@ -7,22 +7,18 @@ import axios from "axios";
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Item from './Item';
 // import Folder from '../../Folder/List'
 import AddFoler from './AddFolder';
 import FolderItem from './Item';
-import FileItem from '../Files/Add';
-import Breadcrumb from "../../components/bread";
-import ResponsiveAppBar from "../../components/Navbar";
-import Search from "./Search";
-import FoldersFiles from "./foldersFiles";
-// import AddFile from '../Files/AddFile';
+import FileItem from '../Files/Item';
+import { Grid } from '@mui/material';
+import ResponsiveAppBar from '../../components/Navbar';
+import SearchComp from '../../components/Search';
+import AddFile from '../Files/AddFile';
 export default function Single(props) {
 
     const navigate = useNavigate();
-    const [unauthorized, setUnauthorized] = useState(false);
-    const [err, setErr] = useState();
-    const [ok, setOk] = useState(false);
+   
     const token = sessionStorage.getItem("token");
 
     const [listOfFolders, setListOfFolders] = useState([]);
@@ -31,22 +27,41 @@ export default function Single(props) {
     const { id } = useParams()
     const [hasFolders, setHasFolders] = useState(false)
     const [hasFiles, setHasFiles] = useState(false)
+    const [clean, setClean] = useState(true)
 
     useEffect(() => {
-
-        GetAllFolders();
-        GetAllFiles();
+        GetAllFoldersFiles();
     })
-    useEffect(() => {
-        console.log("im cateFolder")
-        setHasFiles(true) ;
-    }, [listOfFolders])
 
-    const addNewFile = (folder) => {
+    const cleanFunc = () => {
+        setClean(false)
+    }
+
+    const addNewFolder = (folder) => {
         setListOfFolders([...listOfFolders, folder])
     }
-    const GetAllFolders = async () => {
-        const responseOfFolder = await fetch(`http://localhost:3600/api/folder/${id}`, {
+
+    const addNewFile = (file) => {
+        debugger;
+        setListOfFolders([...listOfFiles, file])
+
+        // console.log("folder" + file)
+        // if (listOfFiles) { setListOfFiles([...listOfFiles, file]) }
+        // else setListOfFiles([file])
+
+    }
+    const deleteFile = (file) => {
+        const del = listOfFiles.indexOf(file);
+        const newListOfFiles = listOfFiles.slice(del, 1)
+        setListOfFiles(newListOfFiles);
+        if (listOfFiles == []) {
+            setHasFiles = false
+        }
+
+    }
+
+    const GetAllFoldersFiles = async () => {
+        const responseOfFolderFilse = await fetch(`http://localhost:3600/api/folder/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -55,58 +70,42 @@ export default function Single(props) {
             }
         })
 
-        if (responseOfFolder.ok) {
-            const data = await responseOfFolder.json();
-            console.log(data)
-            { console.log("lh") }
-            setOk(true)
-            setListOfFolders(data)
-            setHasFolders(true)
-        }
-        else {
-            setUnauthorized(true);
-            const err = await responseOfFolder.json();
-            setErr(err.message);
-            console.log(err.message)
-        }
-
-    }
-    const GetAllFiles = async () => {
-        const responseOfFolder = await fetch(`http://localhost:3600/api/file/${id}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'authorization': `Bearer ${token}`
-
+        if (responseOfFolderFilse.ok) {
+            const data = await responseOfFolderFilse.json();
+        
+            setListOfFolders(data["allFolders"])
+            console.log(listOfFolders)
+            setListOfFiles(data["allFiles"])
+            if (listOfFiles != []) {
+                setHasFiles(true)
             }
-        })
-
-        if (responseOfFolder.ok) {
-            const data = await responseOfFolder.json();
-            console.log(data)
-            setOk(true)
-            setListOfFiles(data)
-            setHasFiles(true)
+            if (listOfFolders != []) {
+                setHasFolders(true)
+            }
         }
         else {
-            setUnauthorized(true);
-            const err = await responseOfFolder.json();
-            setErr(err.message);
+         
+            const err = await responseOfFolderFilse.json();
+            
             console.log(err.message)
         }
+
     }
 
-        return (
-            <>
-                {/* <ResponsiveAppBar></ResponsiveAppBar>
-                <Breadcrumb></Breadcrumb>
-                <Search></Search> */}
-                <AddFoler onAdd={addNewFile} />
-                {console.log("father")}
-                {/* <AddFile></AddFile> */}
-                {hasFolders? listOfFolders.map((i) => <FolderItem key={i.id} folder={i}></FolderItem>) : <></>}
-                {hasFiles? listOfFiles.map((i) => <FileItem key={i.id} file={i}></FileItem>) : <></>}
-                {/* <FoldersFiles></FoldersFiles> */}
-            </>
-        )
-    }
+    return (
+        <>
+          <ResponsiveAppBar></ResponsiveAppBar>
+          <h1>דוגמא</h1>
+          <SearchComp></SearchComp>
+            <AddFoler onAdd={addNewFolder} />
+            <AddFile onAdd={addNewFile} />
+            {clean&&<>
+            <Grid container spacing={1}>
+{/* onDelete={deleteFile() } */}
+                {hasFolders ? listOfFolders.map((i,ind) => <Grid key={ind} item xs={4}> <FolderItem key={ind} folder={i}></FolderItem></Grid>) : <></>}
+                {hasFiles ? listOfFiles.map((i,ind) => <Grid key={ind} item xs={4}><FileItem key={ind} file={i} ></FileItem></Grid>) : <></>}</Grid></>}
+
+            
+        </>
+    )
+}

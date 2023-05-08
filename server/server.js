@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 const cors = require('cors')
 const corsOptions = require('./config/corsOptions')
+const { Console } = require('console');
 
 const PORT = process.env.PORT || 3600
 
@@ -20,6 +21,7 @@ app.use('/', require('./routes/root'))
 app.use("/api/auth", require("./routes/authRoutes"));
 
 app.use('/', require('./middleware/verifyJWT'));
+app.use("/api/filter",require("./routes/filterRouter"))
 app.use("/api/user",require("./routes/userRouter"));
 app.use("/api/warning",require("./routes/warningRouter"));
 app.use("/api/file",require("./routes/fileRouter"));

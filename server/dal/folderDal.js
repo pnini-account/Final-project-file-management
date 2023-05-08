@@ -1,5 +1,6 @@
 
 const db = require('../models/index')
+const { Op } = require("sequelize")
 const Folder = db.folder
 
 class FolderDataAccessor {
@@ -15,8 +16,8 @@ class FolderDataAccessor {
          this.collection = Folder;
     }
 
-    getAllFolders = async()=>{
-        const folder = await Folder.findAll({})
+    getAllFoldersForUser = async(id)=>{
+        const folder = await Folder.findAll({where:{user_id:id}})
         // If no notes
         if (!folder?.length) {
         return res.status(400).json({ message: 'No folder found' })
@@ -42,11 +43,11 @@ class FolderDataAccessor {
     //     console.log(folder)
     //     return folder;
     // }
-
-    getFolderByParentId = async (id) => {
-        const folder = await Folder.findAll({where:{parentId_category:id}})
+    getFoldersByParentId = async (id) => {
+        const folder = await Folder.findAll({where:{[Op.or]: [{parentId_category:id} , {parentId_folder:id}]}})
+      
         console.log("___________44___________")
-        console.log(folder)
+    console.log(folder)
         console.log("____________33__________")
 
         // return json(user)

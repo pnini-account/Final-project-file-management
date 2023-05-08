@@ -8,7 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Boxsx from "./file";
 import TransitionAlerts from "./alert";
 import { useParams } from 'react-router-dom';
-import EmailDetails from "./emailFile";
+import EmailDetails from "./emailDetails";
 import AddWarning from './warning';
 import DeleteFile from './delete';
 import UpdateFile from './update';

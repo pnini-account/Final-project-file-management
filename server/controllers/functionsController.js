@@ -7,8 +7,9 @@ const Warning = require("../models/warning");
 const userController=require("./userController")
 const fileController=require("./fileController")
 
+class FunctionsController{
 //כניסה לקטגוריה
-const enterIntoCategory = async (id) => {
+ enterIntoCategory = async (id) => {
     allFolders = await (folderDal.getFoldersByParentId(id))
     if (!allFolders) {
         return res.status(400).json({ message: 'folder not found' })
@@ -16,17 +17,21 @@ const enterIntoCategory = async (id) => {
     return allFolders;
 }
 //כניסה לתיקייה 
-const enterIntoFolder = async (id) => {
-    allFolders = await (folderDal.getFoldersByParentId(id))
-    allFiles = await (fileDal.getFilesByParentId(id))
-    allFoldersFiles = allFolders.concat(allFiles)
+ enterIntoFolder = async (req,res) => {
+    const id=req.params.id;
+     console.log(id)
+    const allFolders = await (folderDal.getFoldersByParentId(id))
+   
+    const allFiles = await (fileDal.getFilesByParentId(id))
+    // allFoldersFiles = allFolders.concat(allFiles)
+    const allFoldersFiles={"allFolders":allFolders,"allFiles":allFiles}
     if (!allFoldersFiles) {
         return res.status(400).json({ message: 'folder or files not found' })
     }
-    return allFoldersFiles;
+    res.send(allFoldersFiles)
 }
 //כמה יש בכל תקייה
-const countFolder = async (id) => {
+ countFolder = async (id) => {
     const allFoldersFiles = await enterIntoFolder(id)
     const count = allFoldersFiles.length;
     return count;
@@ -38,14 +43,14 @@ const countFolder = async (id) => {
 
 
 //  לפי Id הצגת כל האזהרות 
-const warningsById = async (user) => {
+ warningsById = async (user) => {
     return await Warning.findAll({
         where: { user_id: user.id }
     })
 }
 
 //הצגת אזהרות בתוקף
-const warningsInValidity = async (user) => {
+ warningsInValidity = async (user) => {
     const warningById = await warningsById(user);
     const datetime = new Date();
     date = datetime.toISOString().slice(0, 10);
@@ -54,7 +59,7 @@ const warningsInValidity = async (user) => {
 }
 
 //הוספת טבלה דיפולטיבית
-const addDefaultTable = async (user) => {
+ addDefaultTable = async (user) => {
     const id = user.id;
     const defaultTable = await Category.findAll({ where: { default: true } })
     //foreach on an object?
@@ -63,10 +68,12 @@ const addDefaultTable = async (user) => {
         categoryControl.addNewCategory(cat);
     });
 }
-
+}
 //הפעלת נודניק על אזהרה
+const functionsController=new FunctionsController();
+module.exports = functionsController;
 
-module.exports = addDefaultTable;
+
 
 
 

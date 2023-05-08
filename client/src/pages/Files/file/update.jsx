@@ -6,9 +6,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useState } from 'react'
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from "react"
-import axios from "axios"
+
 const token = sessionStorage.getItem("token");
 
 export default function UpdateFile(props) {
@@ -44,33 +44,29 @@ export default function UpdateFile(props) {
   };
 
   const updateFile = async () => {
-    console.log("updateFileFirst");
-    console.log("name "+ name);
     const response = await fetch(`http://localhost:3600/api/file/${id}`, {
-      method: 'PATCH',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'authorization': `Bearer ${token}`
+        'authorization':`Bearer ${token}`
       },
-      body: JSON.stringify({ name: name, url: url, folderId: folderId, userId: userId })
+      body: JSON.stringify({name:name, url:url, folderId:folderId, userId:userId})
     })
     if (response.ok) {
-      console.log("OKupdateFile");
+      console.log("okrenameFile");
       setActionOK(true);
     }
     else {
-      console.log("notOKupdateFile");
       setUnauthorized(true);
       const err = await response.json();
       setErr(err.message);
     }
   };
 
-
   return (
-    <>    <Button variant="outlined" onClick={handleClickOpen}>
-      update file
-    </Button>
+<>    <Button variant="outlined" onClick={handleClickOpen}>
+       update file
+      </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>file details</DialogTitle>
         <DialogContent>
@@ -96,7 +92,7 @@ export default function UpdateFile(props) {
             variant="standard"
             onChange={(e) => setUrl(e.target.value)}
           />
-          <TextField
+           <TextField
             autoFocus
             margin="dense"
             id="folderId"
@@ -106,7 +102,7 @@ export default function UpdateFile(props) {
             variant="standard"
             onChange={(e) => setFolderId(e.target.value)}
           />
-          <TextField
+             <TextField
             autoFocus
             margin="dense"
             id="userId"
@@ -122,38 +118,6 @@ export default function UpdateFile(props) {
           <Button onClick={handleClose1}>update</Button>
         </DialogActions>
       </Dialog>
-    </>
+      </>  
   );
 }
-
-
-// const Uploader = ({file, setFile, label}) => {
-//   const [selectFile, setSelectFile] = useState() 
-//   useEffect(() => {
-//     if(selectFile){
-//         const formData = new FormData()
-//         formData.append("file", selectFile)
-//         axios.post("http://localhost:3600/api/upload",formData).then(({data})=>{
-//            if(data?.name){
-//             setFile(data.name)
-//            }
-//         }).catch(err=>{
-//             console.log("error")
-//         })
-//     }
-
-//   }, [selectFile])
-    
-//   const onSelectFile = (e)=>{
-//     setSelectFile(e.target.files[0])
-//   }
-
-//   return (
-//     <>
-//     <label htmlFor="file"> {label? label : "File"} </label>
-//     <input type="file" onChange={onSelectFile} name="file" />
-//     </>
-//   )
-// }
-
-// export default Uploader

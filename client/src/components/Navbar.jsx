@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 // import {AuthContext} from '../../context/authContext'
 import {BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import CategoriesList from "../../src/pages/Catogries/List";
+import CategoriesList from "../pages/Categories/List";
 import Home from "../../src/pages/home";
 import ReadFile from "../../src/pages/Files";
 

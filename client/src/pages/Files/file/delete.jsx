@@ -8,10 +8,12 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useState } from 'react'
 import { useParams } from 'react-router-dom';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+
 
 const token = sessionStorage.getItem("token");
 
-export default function DeleteFile() {
+export default function DeleteFile({idFile,onDelete}) {
   const [open, setOpen] = React.useState(false);
   const [err, setErr] = useState();
   const [ok, setOk] = useState(false);
@@ -19,7 +21,10 @@ export default function DeleteFile() {
   const [actionOK, setActionOK] = useState(false);
 
   const { id } = useParams();
-  
+  if(!idFile){
+    console.log(idFile)
+    idFile=id
+  }
   const useEffec = (() => {
     if (err == "") {
       setOk(true);
@@ -40,7 +45,9 @@ export default function DeleteFile() {
   };
 
   const deleteFile = async () => {
-    const response = await fetch(`http://localhost:3600/api/file/${id}`, {
+    
+
+    const response = await fetch(`http://localhost:3600/api/file/${idFile}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -49,10 +56,10 @@ export default function DeleteFile() {
       body: JSON.stringify()
     })
     if (response.ok) {
-      console.log("okdeleteFile");
+      console.log("okdeleteFile"+idFile);
       setActionOK(true);
-    }
-    else {
+// onDelete()  
+    } else {
       setUnauthorized(true);
       const err = await response.json();
       setErr(err.message);
@@ -60,15 +67,14 @@ export default function DeleteFile() {
   };
 
   return (
-<>    <Button variant="outlined" onClick={handleClickOpen}>
+<>    <Button variant="outlined" startIcon={<DeleteForeverIcon />} onClick={handleClickOpen}>
         delete file
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Delete</DialogTitle>
         <DialogContent>
           <DialogContentText>
-          Once deleted you will not be able to recover the file.
-          Are you sure you want to delete the file?
+         האם אתה בטוח שברצונך למחוק קובץ זה לצמיתות?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

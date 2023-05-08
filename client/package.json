@@ -16,6 +16,7 @@
     "html5-file-selector": "^2.1.0",
     "primereact": "^9.3.0",
     "react": "^18.2.0",
+    "react-doc-viewer": "^0.1.5",
     "react-dom": "^18.2.0",
     "react-dropzone-uploader": "^2.11.0",
     "react-router-dom": "^6.9.0",

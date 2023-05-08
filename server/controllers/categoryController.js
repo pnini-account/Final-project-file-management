@@ -1,5 +1,5 @@
 const categoryDal = require("../dal/categoryDal");
-
+const folderDal = require("../dal/folderDal")
 class categoryController {
 
     getAllCategorys = async(req, res)=>{
@@ -21,6 +21,15 @@ class categoryController {
         //const id = req.params.id;
         const id = req.user.id;
         res.json(await categoryDal.getAllCategorysForUser(id));
+    }
+
+    getAllFoldersForCategory=async(req,res)=>{
+        const id = req.params.id;
+        console.log("++++++++++++++++++++")
+        console.log(id)
+        console.log("++++++++++++++++++++")
+
+        res.json(await folderDal.getFoldersByParentId(id)); 
     }
 
     updateCategory = async(req, res) => {

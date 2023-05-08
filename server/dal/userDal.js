@@ -49,10 +49,7 @@ class UserDataAccessor {
 
     getUserById = async (id) => {
         const user = await User.findOne({where:{id:id}})
-        // return json(user)        
-        console.log(id);
-
-        console.log(user);
+        // return json(user)
         return user;
     }
     // getUserById = (id) => {

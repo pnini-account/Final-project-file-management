@@ -1,0 +1,107 @@
+import React, { useEffect, useState} from 'react'
+import { Link, useNavigate } from 'react-router-dom';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import QueuePlayNextIcon from '@mui/icons-material/QueuePlayNext';
+
+export default function UpdateCategory  (props){
+ const [err, setErr] = useState();
+ const [ok, setOk] = useState(false);
+ const [unauthorized, setUnauthorized] = useState(false);
+
+ const token = sessionStorage.getItem("token");
+const updateCategory = async (id) => {
+    const response = await fetch(`http://localhost:3600/api/file/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization':`Bearer ${token}`
+      },
+      body: JSON.stringify({name:name,color:color,img:img})
+    })
+    if (response.ok) {
+      console.log("okUpdateCategory");
+      setOk(true);
+    }
+    else {
+      setUnauthorized(true);
+      const err = await response.json();
+      setErr(err.message);
+    }
+  };
+  
+  const [open, setOpen] = React.useState(false);
+  const [name, setName] = useState("");
+  const [color, setColor] = useState("");
+  const [img, setImg] = useState("");
+
+  const handleClickOpen = () => {
+      setOpen(true);
+  };
+
+  const handleClose = () => {
+      setOpen(false);
+  };
+
+  return (
+    <div>
+        <Button variant="outlined" startIcon={<QueuePlayNextIcon />} onClick={(event)=>{
+          event.stopPropagation()
+          handleClickOpen()}}>
+            Update Category
+        </Button>
+        <Dialog open={open} onClose={handleClose}>
+
+            <DialogContent>
+
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    label="name of category"
+                    type="text"
+                    fullWidth
+                    variant="standard"
+                  
+                    onChange={(e) =>{e.stopPropagation(); setName(e.target.value)}}
+                />
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    id="Color"
+                    label="color of category"
+                    type="text"
+                    fullWidth
+                    variant="standard"
+                    onChange={(e) =>{e.stopPropagation(); setColor(e.target.value)}}
+
+                />    <TextField
+                    autoFocus
+                    margin="dense"
+                    id="Img"
+                    label="image to show on categry"
+                    type="text"
+                    fullWidth
+                    variant="standard"
+                    onChange={(e) =>{e.stopPropagation(); setImg(e.target.value)}}
+
+                />
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button onClick={() => { handleClose();updateCategory(name,color,img) }}>Save</Button>
+            </DialogActions>
+        </Dialog>
+
+        <></>
+    </div>
+);
+}
+     

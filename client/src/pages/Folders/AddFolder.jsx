@@ -34,12 +34,11 @@ export default function AddFoler({onAdd}) {
                 'authorization': `Bearer ${token}`
 
             },
-            body: JSON.stringify({ parentId_category: id, parentId_folder: id, name: text })
+            body: JSON.stringify({ parentId_category: null, parentId_folder: id, name: text })
         })       
 
         if (responseOfFolder.ok) {
             if (responseOfFolder.ok) {
-                console.log(folder)
                 setFolder(await responseOfFolder.json())
             }
             else {
@@ -65,7 +64,6 @@ export default function AddFoler({onAdd}) {
     return (
 
         <>
-            {console.log("(***********)")}
             <Button variant="outlined" startIcon={<QueuePlayNextIcon />} sx={{ left: "80%" }} onClick={handleClickOpen}>
                 Add Folder
             </Button>

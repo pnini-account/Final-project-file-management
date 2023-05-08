@@ -17,8 +17,8 @@ class FileDataAccessor {
          this.File = File;
     }
 
-    getAllFiles = async()=>{
-        const files = await File.findAll({})
+    getAllFilesForUser = async(id)=>{
+        const files = await File.findAll({userId:id})
         // If no notes
         if (!files?.length) {
         return res.status(400).json({ message: 'No files found' })
@@ -29,8 +29,10 @@ class FileDataAccessor {
 
     addNewFile = async (fileData) => {
         const file = await File.create(fileData)
+
         if (file) { // Created
-            return file;
+          
+            return file
         }
     }
 
@@ -42,6 +44,7 @@ class FileDataAccessor {
 
     getFilesByParentId = async (id) => {
         const file = await File.findAll({where:{folderId:id}})
+        console.log(file)
         return file;
     }
 
@@ -55,7 +58,6 @@ class FileDataAccessor {
 
     deleteFile = async (id) => {
         await File.destroy({where: {id: id}});
-        console.log("deleteFile")
         return `file with ID ${id} deleted`;
     }
 //=====search ex4 page 17======//
