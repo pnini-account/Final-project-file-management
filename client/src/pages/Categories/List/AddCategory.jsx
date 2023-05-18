@@ -31,7 +31,7 @@ export default function AddCategory({addOne}) {
         })
 
         if (responseOfCategory.ok) {
-            navigate('/categories')
+            addOne(await responseOfCategory.json())
         }
         else {
             setUnauthorized(true);
@@ -97,7 +97,7 @@ export default function AddCategory({addOne}) {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={() => { handleClose(); addCategoryToDB(name, color, img);addOne() }}>Save</Button>
+                    <Button onClick={() => { handleClose(); addCategoryToDB(name, color, img) }}>Save</Button>
                 </DialogActions>
             </Dialog>
 

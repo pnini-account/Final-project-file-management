@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -10,98 +10,100 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import QueuePlayNextIcon from '@mui/icons-material/QueuePlayNext';
+import Category from '@mui/icons-material/Category';
 
-export default function UpdateCategory  (props){
- const [err, setErr] = useState();
- const [ok, setOk] = useState(false);
- const [unauthorized, setUnauthorized] = useState(false);
+export default function UpdateCategory({ id, setCategory,category }) {
 
- const token = sessionStorage.getItem("token");
-const updateCategory = async (id) => {
-    const response = await fetch(`http://localhost:3600/api/file/${id}`, {
+
+  const token = sessionStorage.getItem("token");
+  const updateCategory = async (name, color, img) => {
+    const response = await fetch(`http://localhost:3600/api/category/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'authorization':`Bearer ${token}`
+        'authorization': `Bearer ${token}`
       },
-      body: JSON.stringify({name:name,color:color,img:img})
+      body: JSON.stringify({ name: name, color: color, img: img })
     })
     if (response.ok) {
       console.log("okUpdateCategory");
-      setOk(true);
+      console.log(response);
+      const category1 = { "id": id, "text": name, "color": color, "img": img }
+      setCategory(category1)
+
     }
     else {
-      setUnauthorized(true);
+
       const err = await response.json();
-      setErr(err.message);
+      console.log(err.massege);
     }
   };
-  
+
   const [open, setOpen] = React.useState(false);
-  const [name, setName] = useState("");
-  const [color, setColor] = useState("");
-  const [img, setImg] = useState("");
+  const [name, setName] = useState(category.name);
+  const [color, setColor] = useState(category.color);
+  const [img, setImg] = useState(category.img);
 
   const handleClickOpen = () => {
-      setOpen(true);
+    setOpen(true);
   };
 
   const handleClose = () => {
-      setOpen(false);
+    setOpen(false);
   };
 
   return (
     <div>
-        <Button variant="outlined" startIcon={<QueuePlayNextIcon />} onClick={(event)=>{
-          event.stopPropagation()
-          handleClickOpen()}}>
-            Update Category
-        </Button>
-        <Dialog open={open} onClose={handleClose}>
+      <Button variant="outlined" startIcon={<QueuePlayNextIcon />} onClick={(event) => {
+        event.stopPropagation()
+        handleClickOpen()
+      }}>
+        Update Category
+      </Button>
+      <Dialog open={open} onClose={handleClose}>
 
-            <DialogContent>
+        <DialogContent>
 
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    label="name of category"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                  
-                    onChange={(e) =>{e.stopPropagation(); setName(e.target.value)}}
-                />
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    id="Color"
-                    label="color of category"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                    onChange={(e) =>{e.stopPropagation(); setColor(e.target.value)}}
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="name of category"
+            type="text"
+            fullWidth
+            variant="standard"
 
-                />    <TextField
-                    autoFocus
-                    margin="dense"
-                    id="Img"
-                    label="image to show on categry"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                    onChange={(e) =>{e.stopPropagation(); setImg(e.target.value)}}
+            onChange={(e) => { e.stopPropagation(); setName(e.target.value) }}
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="Color"
+            label="color of category"
+            type="text"
+            fullWidth
+            variant="standard"
+            onChange={(e) => { e.stopPropagation(); setColor(e.target.value) }}
 
-                />
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClose}>Cancel</Button>
-                <Button onClick={() => { handleClose();updateCategory(name,color,img) }}>Save</Button>
-            </DialogActions>
-        </Dialog>
+          />    <TextField
+            autoFocus
+            margin="dense"
+            id="Img"
+            label="image to show on categry"
+            type="text"
+            fullWidth
+            variant="standard"
+            onChange={(e) => { e.stopPropagation(); setImg(e.target.value) }}
 
-        <></>
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={() => { handleClose(); updateCategory(name, color, img) }}>Save</Button>
+        </DialogActions>
+      </Dialog>
+
+      <></>
     </div>
-);
+  );
 }
-     

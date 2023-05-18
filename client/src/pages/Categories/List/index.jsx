@@ -7,6 +7,8 @@ import Item from "./Item";
 import { Grid } from "@mui/material";
 import AddCategory from './AddCategory';
 import { PropaneSharp } from "@mui/icons-material";
+import { render } from "@testing-library/react";
+
 
 // ; תקח אתץ כל הקבצים לפ]י תיקיות
 
@@ -15,7 +17,7 @@ import { PropaneSharp } from "@mui/icons-material";
 
 const Categories = () => {
     const navigate = useNavigate();
-    const [unauthorized, setUnauthorized] = useState(false);
+    const [render, setRender] = useState(false);
     const [listOfCategory, setListOfCategory] = useState([]);
     //const [flag, setFlag] = useState(false);
     const [err, setErr] = useState();
@@ -46,22 +48,27 @@ const Categories = () => {
             }
             else {
                 console.log("Im in error");
-                setUnauthorized(true);
                 const err = await response.json();
-                setErr(err.message);
                 console.log(err.message)
             }
         }
         fetchData();
-    }, [])
+    }, [render])
+    const renderFunc=()=>{
+        setRender(true)
+    }
+    const add=(category)=>{
+        setListOfCategory([...listOfCategory,category])
+    }
     console.log("listOfCategory");
     console.log(listOfCategory);
     {/* <Item folder={i}></Item> */ }
-    return (
+    return (<>
+        <AddCategory addOne={add}></AddCategory>
        <Grid container spacing={1}>
-        {listOfCategory.map((i,ind) => <Grid item xs={4}><Item key={ind} category={i}/></Grid>)}
+        {listOfCategory.map((i,ind) => <Grid item xs={4}><Item key={ind} category={i} render={renderFunc}/></Grid>)}
 
-        </Grid>
+        </Grid></>
     );
 }
 

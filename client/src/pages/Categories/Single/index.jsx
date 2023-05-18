@@ -67,9 +67,8 @@ export default function SingleCategory(props) {
     }
     return (
         <div>
-            <h1>id</h1>
-            <ResponsiveAppBar/>
-            <SearchComp/>
+            <ResponsiveAppBar></ResponsiveAppBar>
+            <SearchComp></SearchComp>
             <AddFoler onAdd={addNewFolder} />
             {/* <AddFile onAdd={addNewFile} /> */}
             <Grid container spacing={1}>
