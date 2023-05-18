@@ -29,7 +29,7 @@ class CategoryDataAccessor {
     addNewCategory = async (categoryData) => {
         const category = await Category.create(categoryData)
         if (category) { // Created
-            return 'New category created'
+            return category;
             // return res.status(201).json({ message: 'New user created' })
             // } else {
             // return res.status(400).json({ message: 'Invalid user datareceived' })
@@ -47,10 +47,13 @@ class CategoryDataAccessor {
     }
 
     updateCategory = async (id , color, img, text ) => {
-        const category = await Category.update({newid, color, img, text  }, { where: { id: id } })
+        console.log("in update");
+        const category = await Category.update({ color, img, text  }, { where: { id: id } })
         if (!category) {
             return res.status(400).json({ message: 'folder not found' })
         }
+        console.log("in ok");
+
         return `category with ID ${id} updated`
     }
 
