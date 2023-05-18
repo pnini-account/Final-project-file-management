@@ -49,7 +49,9 @@ class WarningDataAccessor {
     }
 
     deleteWarning = async (id) => {
-        await Warning.destroy({where: {id: id}});
+        const Id = id.id;
+        console.log(id.id)
+        await Warning.destroy({where: {id: Id}});
         return `warning with ID ${id} deleted`
     }
 }

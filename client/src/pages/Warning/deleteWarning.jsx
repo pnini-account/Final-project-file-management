@@ -39,13 +39,15 @@ export default function DeleteWarning(id) {
   };
 
   const deleteWarning = async () => {
+    console.log(id.id)
+    const Id = id.id;
     const response = await fetch(`http://localhost:3600/api/warning`, {
       method: 'DELETE',
-      headers: {
+      headers: { 
         'Content-Type': 'application/json',
+        'authorization': `Bearer ${token}`
       },
-      body: id
-    // body: JSON.stringify()
+      body:  JSON.stringify({id:Id})
     })
     if (response.ok) {
       console.log("okdeleteWarning");

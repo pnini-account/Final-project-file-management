@@ -12,7 +12,7 @@ fileRouter.route("/:id")
     .get(fileController.openFile)
     //todo:searchFile function
     .delete(fileController.deleteFile)
-    .patch(fileController.updateFile);//איך אני שולחת את ה - ID?
+    .put(fileController.updateFile);//איך אני שולחת את ה - ID?
 
 // fileRouter.route("/updatName/:id")
 //     .put(fileController.updateNameFile);//todo:להפריד עדכון של שם ונתיב

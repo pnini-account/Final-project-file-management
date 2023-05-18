@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { useContext } from "react";
 import BoxSx from "../pages/Files/file/file";
 import { style } from "@mui/system";
-import DocViewer from "react-doc-viewer";
+// import DocViewer from "react-doc-viewer";
 
 
 const ShowArticle = (name) => {

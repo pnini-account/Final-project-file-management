@@ -25,12 +25,11 @@ class fileController {
 
     updateFile = async(req, res) => {
         const id  = req.params.id;
-        const { name, url, folderId, userId } = req.query   
+        const { name, url, folderId, userId } = req.body;  
         // Confirm data
         if (!id) {
         return res.status(400).json({ message: 'Id fields are required'})
         }
-        
         res.send(await fileDal.updateFile(id, name, url, folderId, userId));  
     }
     
