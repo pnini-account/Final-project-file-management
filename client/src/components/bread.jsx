@@ -10,7 +10,8 @@ function handleClick(event) {
   console.info('You clicked a breadcrumb.');
 }
 
-export default function Breadcrumb() {
+export default function Breadcrumb({breadcrumcs}) {
+  console.log({breadcrumcs});
   const breadcrumbs = [
     <Link underline="hover" key="1" color="inherit" href="/" onClick={handleClick}>
       MUI

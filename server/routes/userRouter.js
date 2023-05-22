@@ -5,7 +5,7 @@ const userController = require("../controllers/userController");
 const userRouter = express.Router();
 
 userRouter.route("/")
-    .get(userController.getAllUsers)
+    .get(userController.getAllItemsForUser)
     .post(userController.addNewUser)//TODO:In the funcion add the categoryDefultTable
     //.patch(userController.updateUser)
     //.delete(userController.deleteUser)

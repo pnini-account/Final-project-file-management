@@ -1,6 +1,7 @@
 const express = require("express");
 
 const folderController = require("../controllers/folderController");
+const functionController = require("../controllers/functionsController");
 
 const folderRouter = express.Router();
 
@@ -10,7 +11,7 @@ folderRouter.route("/")
 
 folderRouter.route("/:id")
     // .get(folderController.getInFolder)
-    .get(folderController.getFolderByParentId)
+    .get(functionController.enterIntoFolder)
     .patch(folderController.updateFolder)//todo:להפריד עדכון של שם ונתיב 
     //todo:searchFolder function
     .delete(folderController.deleteFolder);

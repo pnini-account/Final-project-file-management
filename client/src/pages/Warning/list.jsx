@@ -21,6 +21,7 @@ const Warnings = () => {
       };
     useEffect(() => {
         async function fetchData() {
+            console.log("www1");
             const response = await fetch("http://localhost:3600/api/warning", {
                 method: 'GET',
                 headers: {
@@ -41,8 +42,10 @@ const Warnings = () => {
                 const err = await response.json();
                 setErr(err.message);
                 console.log(err.message)
+                console.log("err.message")
             }
         }
+        console.log("www2");
         fetchData();
     }, [])
     console.log("listOfWarnings");

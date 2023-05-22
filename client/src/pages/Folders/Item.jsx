@@ -7,25 +7,48 @@ import { Link, useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import DeleteFolder from './DeleteFolder';
 // import SingleCategory from '../Catogries/Single';
-import SingleFolder from '../Folders/Single'
 import { CardActionArea } from '@mui/material';
 
 export default function FolderItem(props) {
-  const [getInto, setGetInto] = useState(false);
+  const token = sessionStorage.getItem("token");
+  const id = props.folder.id;
+  const [count, setCount] = useState(0);
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   // { getInto && navigate(`/SingleFolder/${props.folder.id}`) }
-  //   { props.setGetIntoFolder != null && props.setGetIntoFolder(true) }
-  //   // setGetIntoFolder && setGetIntoFolder(true)
-  //   // setGetInto(false)
-  //   console.log(getInto, "getIntogetInto");
-  // }, [getInto])
+  useEffect(()=>{
+    const getCount = async () => {
+    console.log("im in 1 ");
+    const response = await fetch(`http://localhost:3600/api/folder/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': `Bearer ${token}`
+
+      }
+    })
+
+
+    if (response.ok) {
+      console.log("im in 2 ");
+
+      const data = await response.json();
+      setCount(data.count)
+    }
+
+    else {
+      console.log("im in 3 ");
+
+      const err = await response.json();
+
+      console.log(err.message)
+    }
+  }
+getCount()}, [])
+
+
 
   return (
     <>
@@ -47,12 +70,12 @@ export default function FolderItem(props) {
             </Typography>
 
             <Typography variant="body2" color="text.secondary">
-              noa hashmena
+              {count}
             </Typography>
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <DeleteFolder></DeleteFolder>
+          <DeleteFolder id={props.folder.id}></DeleteFolder>
         </CardActions>
       </Card>    <br />
       <br /><br /><br />

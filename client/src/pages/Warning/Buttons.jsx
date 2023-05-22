@@ -5,15 +5,16 @@ import DeleteWarning from './deleteWarning';
 import EmailWarning from './emailWarning';
 
 
-export default function Actions(id) {
+export default function Actions(props) {
     const navigate = useNavigate();
-    console.log("?????"+id.id)
-    const Id = id.id;
+    console.log("props.id"+props.id)
+    const fileId = props.fileId;
+    console.log("fileId"+fileId);
     return (
         <>
-            <Button variant="outlined" disableElevation onClick={()=>{navigate(`/ReadFile/${Id}`)}}>לפתיחת המסמך</Button>
-            <DeleteWarning id={id}></DeleteWarning>
-            <Button variant="outlined" disableElevation>הפעלת נודניק</Button>
-            <EmailWarning w_id={id}></EmailWarning>
+            <Button variant="outlined" disableElevation onClick={()=>{navigate(`/ReadFile/${fileId}`)}}>לפתיחת המסמך</Button>
+            <DeleteWarning id={props.id}></DeleteWarning>
+            <Button variant="outlined" disableElevation onClick={()=>{navigate(`/ReadFile/${fileId}`)}}>הפעלת נודניק</Button>
+            <EmailWarning id={props.id} fileId={fileId} text = {props.text}></EmailWarning>
         </>)
 }
