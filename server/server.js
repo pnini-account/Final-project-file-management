@@ -9,6 +9,9 @@ const cors = require('cors')
 const corsOptions = require('./config/corsOptions')
 const { Console } = require('console');
 
+
+
+
 const PORT = process.env.PORT || 3600
 
 app.use(cors(corsOptions))
