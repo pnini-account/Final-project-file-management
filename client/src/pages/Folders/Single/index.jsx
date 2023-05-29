@@ -35,8 +35,8 @@ export default function SingleFolder(props) {
     const [userFolders, setUserFolders] = useState([]);
     const [userCategoris, setUserCategoris] = useState([]);
     const { id } = useParams()
-    const [breadcrumcs, setBreadCrumb] = useState()
-    const [currentBreadCrumb, setCurrentBreadCrumb] = useState()
+    const [breadcrumcs, setBreadCrumb] = useState([])
+    const [currentBreadCrumb, setCurrentBreadCrumb] = useState({})
     const cleanFunc = () => {
         setClean(false)
     }
@@ -62,9 +62,10 @@ export default function SingleFolder(props) {
 
     }
 
-useEffect(()=>{
-    console.log("ks");
-},[breadcrumcs,currentBreadCrumb])
+    useEffect(() => {
+        console.log("breadcrumcs");
+    }, [breadcrumcs, currentBreadCrumb])
+
     useEffect(() => {
         const GetAllFoldersFiles = async () => {
             const responseOfFolderFilse = await fetch(`http://localhost:3600/api/folder/${id}`, {
@@ -92,7 +93,6 @@ useEffect(()=>{
             else {
 
                 const err = await responseOfFolderFilse.json();
-
                 console.log(err.message)
             }
 
@@ -105,12 +105,11 @@ useEffect(()=>{
                     'authorization': `Bearer ${token}`
 
                 }
-            }).then(console.log("finish"))
-
+            })
 
             if (allItems.ok) {
                 const data = await allItems.json();
-                console.log('before set' + data.allCategories);
+                console.log(data.allCategories + 'before set');
                 setUserCategoris(data.allCategories)
                 setUserFolders(data.allFolders)
                 // console.log('after set'+ userCategoris );
@@ -130,25 +129,26 @@ useEffect(()=>{
     }, [id])
 
     useEffect(() => {
-        console.log('userCategoris')
-        console.log(userCategoris)
-        console.log({userCategoris});
-        console.log({userFolders});
-        setBreadCrumb(userFolders.find(f => f.id === id))
-        setCurrentBreadCrumb(userFolders.find(f => f.id === id))
-
-
+        console.log({ userCategoris });
+        console.log({ userFolders });
+        const folder = userFolders.find(f => f.id == id);
+        setBreadCrumb([folder])
+        setCurrentBreadCrumb({folder})
     }, [userFolders, userCategoris])
 
-    useEffect(()=>{
-        console.log("ust");
-        console.log({currentBreadCrumb});
-//    while (!currentBreadCrumb.parentId_category) {
-//             breadcrumcs.push(userFolders.find(f => f.id === currentBreadCrumb.parentId_folder))
-//             setCurrentBreadCrumb(userFolders.find(f => f.id === currentBreadCrumb.parentId_folder))
-//         }
-//         breadcrumcs.push(userCategoris.find(f => f.id === currentBreadCrumb.parentId_category))
-    },[currentBreadCrumb,breadcrumcs])
+    useEffect(() => {
+        if (breadcrumcs.length !== 0) {
+            console.log("ust");
+            console.log({ currentBreadCrumb });
+            console.log({ breadcrumcs });
+
+            while (!currentBreadCrumb.parentId_category) {
+                breadcrumcs.push(userFolders.find(f => f.id === currentBreadCrumb.parentId_folder))
+                setCurrentBreadCrumb(userFolders.find(f => f.id === currentBreadCrumb.parentId_folder))
+            }
+            breadcrumcs.push(userCategoris.find(f => f.id === currentBreadCrumb.parentId_category))
+        }
+    }, [currentBreadCrumb])
 
     return (
         <><h1>{id}</h1>

@@ -11,7 +11,7 @@ function handleClick(event) {
 }
 
 export default function Breadcrumb({breadcrumcs}) {
-  console.log({breadcrumcs});
+  // console.log({breadcrumcs});
   const breadcrumbs = [
     <Link underline="hover" key="1" color="inherit" href="/" onClick={handleClick}>
       MUI

@@ -20,11 +20,6 @@ const Categories = () => {
     const [render, setRender] = useState(false);
     const [listOfCategory, setListOfCategory] = useState([]);
     //const [flag, setFlag] = useState(false);
-    const [err, setErr] = useState();
-    const [ok, setOk] = useState(false);
-    useEffect(()=>{
-        console.log({listOfCategory});
-    },[listOfCategory])
     useEffect(() => {
         console.log("Im in useEffect");
         const token = sessionStorage.getItem("token");
