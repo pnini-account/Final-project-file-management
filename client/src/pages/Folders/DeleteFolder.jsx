@@ -39,7 +39,7 @@ export default function DeleteFolder(props) {
   const handleClose1 = () => {
     setOpen(false);
     console.log(props.id)
-    debugger;
+ 
      deleteCategory(props.id)
   };
 

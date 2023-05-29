@@ -42,7 +42,7 @@ export default function Single(props) {
     }
 
     const addNewFile = (file) => {
-        debugger;
+      
         setListOfFolders([...listOfFiles, file])
 
         // console.log("folder" + file)

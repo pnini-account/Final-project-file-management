@@ -1,6 +1,9 @@
 
 const db = require('../models/index')
 const Category = db.category
+const Folder=db.folder
+const File=db.file
+
 class CategoryDataAccessor {
     db;
     Category;
@@ -58,14 +61,22 @@ class CategoryDataAccessor {
     }
 
     deleteCategory = async (id) => {
-        await Category.destroy({
-            where: {
-                id: id
-            }
-        });
-        return `category with ID ${id} deleted`
-    }
 
+    //   const folders=  await Folder.findAll({
+    //         where: {
+    //             parentId_category: id
+    //         }
+    //     });
+    //     folders.map((f)=>{File.destroy({where:{parentId_category: id}})})
+    //     await Category.destroy({
+    //         where: {
+    //             id: id
+    //         }
+    //     });
+    //     return `category with ID ${id} deleted`
+    // }
+    return `connot to delete`
+    }
 }
 
 const categoryDataAccessor = new CategoryDataAccessor();

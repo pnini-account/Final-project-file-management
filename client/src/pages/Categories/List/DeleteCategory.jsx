@@ -15,17 +15,7 @@ const token = sessionStorage.getItem("token");
 
 export default function DeleteCategory(props) {
   const [open, setOpen] = React.useState(false);
-  const [err, setErr] = useState();
-  const [ok, setOk] = useState(false);
-  const [unauthorized, setUnauthorized] = useState(false);
-  const [actionOK, setActionOK] = useState(false);
 
-
-  const useEffec = (() => {
-    if (err == "") {
-      setOk(true);
-    }
-  }, [err])
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -39,7 +29,7 @@ export default function DeleteCategory(props) {
   const handleClose1 = () => {
     setOpen(false);
     console.log(props.id)
-    debugger;
+
      deleteCategory(props.id)
   };
 
@@ -56,13 +46,12 @@ export default function DeleteCategory(props) {
           body: JSON.stringify()
         })
         if (response.ok) {
-          console.log("okdeleteCategory"+id);
-          setActionOK(true);
+          
         }
         else {
-          setUnauthorized(true);
+      
           const err = await response.json();
-          setErr(err.message);
+          console.log(err.message);
           
         }
       };
@@ -79,7 +68,7 @@ export default function DeleteCategory(props) {
         <DialogTitle>Delete</DialogTitle>
         <DialogContent>
           <DialogContentText>
-         האם אתה בטוח שברצונך למחוק קובץ זה לצמיתות?
+         האם אתה בטוח שברצונך למחוק `category` זה לצמיתות?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
