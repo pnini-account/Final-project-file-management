@@ -11,11 +11,11 @@ function handleClick(event) {
 }
 
 export default function Breadcrumb({breadcrumcs}) {
-  // console.log({breadcrumcs});
+  if(breadcrumcs.length!==0){
+  console.log({breadcrumcs});
   const breadcrumbs = [
     <Link underline="hover" key="1" color="inherit" href="/" onClick={handleClick}>
-      MUI
-    </Link>,
+d  </Link>,
     <Link
       underline="hover"
       key="2"
@@ -23,12 +23,12 @@ export default function Breadcrumb({breadcrumcs}) {
       href="/material-ui/getting-started/installation/"
       onClick={handleClick}
     >
-      Core
+d
     </Link>,
     <Typography key="3" color="text.primary">
       Breadcrumb
     </Typography>,
-  ];
+  ];}
 
   return (
     <Stack spacing={2}>

@@ -62,9 +62,6 @@ export default function SingleFolder(props) {
 
     }
 
-    useEffect(() => {
-        console.log("breadcrumcs");
-    }, [breadcrumcs, currentBreadCrumb])
 
     useEffect(() => {
         const GetAllFoldersFiles = async () => {
@@ -132,22 +129,35 @@ export default function SingleFolder(props) {
         console.log({ userCategoris });
         console.log({ userFolders });
         const folder = userFolders.find(f => f.id == id);
-        setBreadCrumb([folder])
-        setCurrentBreadCrumb({folder})
+        console.log({ folder });
+        if (folder) {
+            setBreadCrumb([folder])
+            setCurrentBreadCrumb(folder)
+        }
     }, [userFolders, userCategoris])
 
     useEffect(() => {
         if (breadcrumcs.length !== 0) {
-            console.log("ust");
+            console.log(breadcrumcs.length !== 0);
+            console.log({ breadcrumcs });
             console.log({ currentBreadCrumb });
             console.log({ breadcrumcs });
+            
 
-            while (!currentBreadCrumb.parentId_category) {
+            if (currentBreadCrumb.parentId_category===null) 
+            {
                 breadcrumcs.push(userFolders.find(f => f.id === currentBreadCrumb.parentId_folder))
                 setCurrentBreadCrumb(userFolders.find(f => f.id === currentBreadCrumb.parentId_folder))
             }
             breadcrumcs.push(userCategoris.find(f => f.id === currentBreadCrumb.parentId_category))
+            console.log(breadcrumcs.length !== 0);
+            console.log({ breadcrumcs });
+            console.log({ currentBreadCrumb });
+            console.log({ breadcrumcs });
         }
+
+        else
+        console.log("loooooooooooooooooooooooozer");
     }, [currentBreadCrumb])
 
     return (
