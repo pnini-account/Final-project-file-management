@@ -33,7 +33,7 @@ const cleanF=()=>{
     <>
       {/* {getInto && setGetInto(false) && navigate(`/SingleFile/${file.id}`)} */}
       {/* <Card sx={{ maxWidth: 345 }} onClick={() => { setGetInto(true); }}> */}
-     {clean&& <Card>
+     {clean&& <Card> 
         <CardActionArea>
         <CardMedia
              sx={{ maxWidth: 345 }} 

@@ -25,10 +25,11 @@ const upload = async (req, res) => {
     try {
 
         console.log("try")
-
         await fsPromises.writeFile(fileUrl, req.file.buffer)
-        const idFolder = req.idFolder;
+        const idFolder = req.body.idFolder;
+        console.log(idFolder)
         const fileData = {name:filename,url:fileUrl,folderId:idFolder, userId:req.user.id};
+        console.log(fileData)
         const fileCreated = await fileDal.addNewFile(fileData);
         return res.json({ location: fileUrl, name: filename })
     } catch (err) {

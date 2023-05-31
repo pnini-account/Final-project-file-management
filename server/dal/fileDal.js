@@ -29,9 +29,7 @@ class FileDataAccessor {
 
     addNewFile = async (fileData) => {
         const file = await File.create(fileData)
-
         if (file) { // Created
-          
             return file
         }
     }
