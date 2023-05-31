@@ -4,17 +4,13 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+
 import QueuePlayNextIcon from '@mui/icons-material/QueuePlayNext';
 import { useEffect, useState } from 'react'
-import Categories from '.';
+
 import { Link, useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router-dom';
-import FolderItem from './Item';
-import { Input } from 'react-dropzone-uploader';
-import { Search } from '@mui/icons-material';
-import SearchComp from '../../components/Search';
+
 import Uploader from './file/uploudFile';
 import axios from "axios";
 export default function AddFile({ onAdd }) {
@@ -50,41 +46,13 @@ export default function AddFile({ onAdd }) {
             if (data?.name) {
                 console.log(data.name);
                 console.log(data.location);
-                setFile(data.location);
-                setName(data.name);
-
+                onAdd(data)
             }
         }).catch(err => {
             console.log("error");
         });
     }
-    //     const responseOfFile = await fetch(`http://localhost:3600/api/file`, {
-    //         method: 'post',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'authorization': `Bearer ${token}`
-
-    //         },
-    //         body: JSON.stringify({ folderId: id, name: name,file:file })
-    //     })
-
-
-    //     if (responseOfFile.ok) {
-
-    //         setFile(await responseOfFile.json())
-    //     }
-    //     else {
-
-    //         const err = await responseOfFile.json();
-
-    //         console.log(err.message)
-    //     }
-    // }
-
-
-
-
-
+   
     const [open, setOpen] = React.useState(false);
     const [name, setName] = useState("");
     const [fileToPost, setFileToPost] = useState({});
@@ -133,7 +101,3 @@ export default function AddFile({ onAdd }) {
 
         </>)
 }
-// const handleClickOpen = () => {
-//     console.log(id)
-//     navigate(`/UplaudFile${id}`)
-// };

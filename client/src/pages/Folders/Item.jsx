@@ -10,6 +10,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import DeleteFolder from './DeleteFolder';
+import UpdateFolder from './UpdateFolder';
 // import SingleCategory from '../Catogries/Single';
 import { CardActionArea } from '@mui/material';
 
@@ -18,7 +19,7 @@ export default function FolderItem(props) {
   const id = props.folder.id;
   const [count, setCount] = useState(0);
   const [clean, setClean] = useState(true);
-
+const [name,setName]=useState(props.folder.name)
   const navigate = useNavigate();
   useEffect(()=>{
     const getCount = async () => {
@@ -54,6 +55,9 @@ const cleanF=()=>{
 setClean(false)
 }
 
+const rename=(name)=>{
+setName(name)
+}
   return (
    
     <>
@@ -71,7 +75,7 @@ setClean(false)
           </FolderOpenIcon>
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              {props.folder.name}
+              {name}
             </Typography>
 
             <Typography variant="body2" color="text.secondary">
@@ -81,6 +85,7 @@ setClean(false)
         </CardActionArea>
         <CardActions>
           <DeleteFolder id={props.folder.id} onDelete={cleanF}/>
+          <UpdateFolder folder={props.folder} setFolderName={rename}></UpdateFolder>
         </CardActions>
       </Card>    }
      

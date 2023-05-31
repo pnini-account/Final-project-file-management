@@ -12,7 +12,7 @@ folderRouter.route("/")
 folderRouter.route("/:id")
     // .get(folderController.getInFolder)
     .get(functionController.enterIntoFolder)
-    .patch(folderController.updateFolder)//todo:להפריד עדכון של שם ונתיב 
+    .put(folderController.updateFolder)//todo:להפריד עדכון של שם ונתיב 
     //todo:searchFolder function
     .delete(folderController.deleteFolder);
 

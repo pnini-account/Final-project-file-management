@@ -35,6 +35,7 @@ const upload = async (req, res) => {
     } catch (err) {
         console.log("catch")
 
+        
         res.status(500).send(err)
     }
     res.send("test")

@@ -66,8 +66,9 @@ class FolderDataAccessor {
         return folder;
     }
 
-    updateFolder = async (id,  name, parentid, userid) => {
-        const folder = await Folder.update({ name, parentid, userid }, { where: { id: id } })
+    updateFolder = async (id,  name) => {
+        console.log({name});
+        const folder = await Folder.update({ name }, { where: { id: id } })
         if (!folder) {
             return res.status(400).json({ message: 'folder not found' })
         }

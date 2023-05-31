@@ -90,9 +90,7 @@ export default function SearchComp({clean}) {
 
     }
     else {
-      console.log("ppqqqqqqp")
-
-      setUnauthorized(true);
+        setUnauthorized(true);
       const err = await response.json();
       setErr(err.message);
       console.log(err.message)

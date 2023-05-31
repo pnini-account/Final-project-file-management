@@ -38,6 +38,7 @@ export default function Single(props) {
     }
 
     const addNewFolder = (folder) => {
+        console.log("im in first single");
         setListOfFolders([...listOfFolders, folder])
     }
 

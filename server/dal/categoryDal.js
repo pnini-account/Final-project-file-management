@@ -43,11 +43,10 @@ class CategoryDataAccessor {
     }
 
     getAllCategorysForUser = async (id) => {
-        console.log("getAllCategorysForUser");
-        console.log("id"+id)
+       
         const category = await Category.findAll({ where: { userId: id } })
         // return json(user)
-        console.log(category)
+       
         return category;
     }
 

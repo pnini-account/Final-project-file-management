@@ -15,10 +15,10 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import DeleteFile from './file/delete';
 import { useParams } from 'react-router-dom';
 import { CardActionArea } from '@mui/material';
-
+import UpdateFile from './file/update';
 export default function FileItem({file}) {
   // console.log(onDelete)
-  const [getInto, setGetInto] = useState(false);
+  const [name, setName] = useState(file.name);
 
   // const navigate = useNavigate();
   // const {id}=useParams();
@@ -27,6 +27,9 @@ export default function FileItem({file}) {
 const cleanF=()=>{
   setClean(false);
   
+}
+const rename=(name)=>{
+  setName(name)
 }
 
   return (
@@ -46,7 +49,7 @@ const cleanF=()=>{
         </Face4Icon>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {file.name}
+            {name}
           </Typography>
 
           <Typography variant="body2" color="text.secondary">
@@ -54,6 +57,7 @@ const cleanF=()=>{
           </Typography>
         </CardContent>
        <DeleteFile idFile={file.id} onDelete={cleanF}></DeleteFile>
+       <UpdateFile file={file} setFileName={rename}></UpdateFile>
        </CardActionArea>
         </Card>  }
       {/*  */}
