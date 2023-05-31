@@ -15,21 +15,13 @@ const token = sessionStorage.getItem("token");
 
 export default function DeleteFile({idFile,onDelete}) {
   const [open, setOpen] = React.useState(false);
-  const [err, setErr] = useState();
-  const [ok, setOk] = useState(false);
-  const [unauthorized, setUnauthorized] = useState(false);
-  const [actionOK, setActionOK] = useState(false);
+ 
 
   const { id } = useParams();
   if(!idFile){
     console.log(idFile)
     idFile=id
   }
-  const useEffec = (() => {
-    if (err == "") {
-      setOk(true);
-    }
-  }, [err])
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -57,12 +49,12 @@ export default function DeleteFile({idFile,onDelete}) {
     })
     if (response.ok) {
       console.log("okdeleteFile"+idFile);
-      setActionOK(true);
-// onDelete()  
-    } else {
-      setUnauthorized(true);
+      onDelete(idFile);
+    } 
+    else {
+  
       const err = await response.json();
-      setErr(err.message);
+      console.log(err.message);
     }
   };
 

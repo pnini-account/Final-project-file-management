@@ -42,10 +42,10 @@ export default function Single(props) {
     }
 
     const addNewFile = (file) => {
-      
+       console.log("im in first single");
         setListOfFolders([...listOfFiles, file])
 
-        // console.log("folder" + file)
+       
         // if (listOfFiles) { setListOfFiles([...listOfFiles, file]) }
         // else setListOfFiles([file])
 
@@ -97,7 +97,7 @@ export default function Single(props) {
           <ResponsiveAppBar></ResponsiveAppBar>
           <h1>דוגמא</h1>
           <SearchComp></SearchComp>
-            <AddFoler onAdd={addNewFolder} />
+            <AddFoler onAdd={addNewFolder} fatherType={'f'} />
             <AddFile onAdd={addNewFile} />
             {clean&&<>
             <Grid container spacing={1}>

@@ -69,7 +69,7 @@ export default function SingleCategory(props) {
         <div>
             <ResponsiveAppBar></ResponsiveAppBar>
             <SearchComp></SearchComp>
-            <AddFoler onAdd={addNewFolder} />
+            <AddFoler onAdd={addNewFolder}  fatherType={'c'}/>
             {/* <AddFile onAdd={addNewFile} /> */}
             <Grid container spacing={1}>
                 {hasFolders && <><>{listOfFolders.map((i) => <Grid item xs={4}> <FolderItem key={i.id} folder={i}></FolderItem></Grid>)}</></>}

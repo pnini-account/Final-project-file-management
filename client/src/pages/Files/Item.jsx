@@ -18,18 +18,22 @@ import { CardActionArea } from '@mui/material';
 
 export default function FileItem({file}) {
   // console.log(onDelete)
-  // const [getInto, setGetInto] = useState(false);
+  const [getInto, setGetInto] = useState(false);
 
   // const navigate = useNavigate();
   // const {id}=useParams();
-  
+  const [clean, setClean] = useState(true);
 
+const cleanF=()=>{
+  setClean(false);
+  
+}
 
   return (
     <>
       {/* {getInto && setGetInto(false) && navigate(`/SingleFile/${file.id}`)} */}
       {/* <Card sx={{ maxWidth: 345 }} onClick={() => { setGetInto(true); }}> */}
-      <Card>
+     {clean&& <Card>
         <CardActionArea>
         <CardMedia
              sx={{ maxWidth: 345 }} 
@@ -49,9 +53,9 @@ export default function FileItem({file}) {
             nomi
           </Typography>
         </CardContent>
-       <DeleteFile idFile={file.id}></DeleteFile>
+       <DeleteFile idFile={file.id} onDelete={cleanF}></DeleteFile>
        </CardActionArea>
-      </Card>  
+        </Card>  }
       {/*  */}
 
     </>)

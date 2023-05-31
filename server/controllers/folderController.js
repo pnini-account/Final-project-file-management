@@ -20,18 +20,18 @@ class FolderController {
     getFolderByParentId = async(req, res) => {
        const id = req.params.id;
        console.log(id)
-       res.json(await folderDal.getFoldersByParentId(id));
+       res.json(await folderDal.getFoldersByParentIdFolder(id));
     }
 
     updateFolder = async(req, res) => {
         const id  = req.params.id;
-        const { newid, name, parentid,userid } = req.query   
+        const {name, parentid,userid } = req.query   
         // Confirm data
         if (!id) {
         return res.status(400).json({ message: 'Id fields are required'
         })
         }
-        res.send(await folderDal.updateFolder(id, newid, name, parentid,userid ));  
+        res.send(await folderDal.updateFolder(id, name, parentid,userid ));  
     }
 
     deleteFolder = async(req, res) => {

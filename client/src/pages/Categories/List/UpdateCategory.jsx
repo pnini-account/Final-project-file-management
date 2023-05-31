@@ -16,19 +16,20 @@ export default function UpdateCategory({ id, setCategory,category }) {
 
 
   const token = sessionStorage.getItem("token");
-  const updateCategory = async (name, color, img) => {
+  const updateCategory = async (text, color, img) => {
+    console.log("try");
     const response = await fetch(`http://localhost:3600/api/category/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'authorization': `Bearer ${token}`
       },
-      body: JSON.stringify({ name: name, color: color, img: img })
+      body: JSON.stringify({ text: text, color: color, img: img })
     })
     if (response.ok) {
       console.log("okUpdateCategory");
       console.log(response);
-      const category1 = { "id": id, "text": name, "color": color, "img": img }
+      const category1 = { "id": id, "text": text, "color": color, "img": img }
       setCategory(category1)
 
     }
@@ -40,7 +41,7 @@ export default function UpdateCategory({ id, setCategory,category }) {
   };
 
   const [open, setOpen] = React.useState(false);
-  const [name, setName] = useState(category.name);
+  const [text, setText] = useState(category.name);
   const [color, setColor] = useState(category.color);
   const [img, setImg] = useState(category.img);
 
@@ -73,7 +74,7 @@ export default function UpdateCategory({ id, setCategory,category }) {
             fullWidth
             variant="standard"
 
-            onChange={(e) => { e.stopPropagation(); setName(e.target.value) }}
+            onChange={(e) => { e.stopPropagation(); setText(e.target.value) }}
           />
           <TextField
             autoFocus
@@ -99,7 +100,7 @@ export default function UpdateCategory({ id, setCategory,category }) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={() => { handleClose(); updateCategory(name, color, img) }}>Save</Button>
+          <Button onClick={() => { handleClose(); updateCategory(text, color, img) }}>Save</Button>
         </DialogActions>
       </Dialog>
 

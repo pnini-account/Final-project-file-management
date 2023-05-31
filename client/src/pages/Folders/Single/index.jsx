@@ -166,7 +166,7 @@ export default function SingleFolder(props) {
             <ResponsiveAppBar />
             <SearchComp />
             <AddFile onAdd={addNewFile} />
-            <AddFoler onAdd={addNewFolder} />
+            <AddFoler onAdd={addNewFolder} fatherType='f' />
             {/* <Grid container spacing={1}>
                 {hasFolders && listOfFolders.map((i, ind) => <Grid key={ind} item xs={4}> <FolderItem key={ind} folder={i} setGetIntoFolder={setGetIntoFolder}></FolderItem></Grid>)}
             </Grid>

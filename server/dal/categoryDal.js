@@ -1,8 +1,10 @@
 
+const { folder } = require('../models/index');
 const db = require('../models/index')
 const Category = db.category
 const Folder=db.folder
-const File=db.file
+const folderDal =require('./folderDal')
+
 
 class CategoryDataAccessor {
     db;
@@ -51,6 +53,8 @@ class CategoryDataAccessor {
 
     updateCategory = async (id , color, img, text ) => {
         console.log("in update");
+        console.log({text});  
+
         const category = await Category.update({ color, img, text  }, { where: { id: id } })
         if (!category) {
             return res.status(400).json({ message: 'folder not found' })
@@ -62,21 +66,28 @@ class CategoryDataAccessor {
 
     deleteCategory = async (id) => {
 
-    //   const folders=  await Folder.findAll({
-    //         where: {
-    //             parentId_category: id
-    //         }
-    //     });
-    //     folders.map((f)=>{File.destroy({where:{parentId_category: id}})})
-    //     await Category.destroy({
-    //         where: {
-    //             id: id
-    //         }
-    //     });
-    //     return `category with ID ${id} deleted`
-    // }
-    return `connot to delete`
+        const folders = await Folder.findAll({
+            where: {
+                parentId_folder: id
+            }
+        });
+        console.log(folders[0]);
+
+
+
+         await Promise.all(folders.map(async (f) => { 
+            return await folderDal.deleteFolder(f.id); 
+          })) 
+        
+        await Category.destroy({
+            where: {
+                id: id
+            }
+        });
+        return `category with ID ${id} deleted`
     }
+ 
+    
 }
 
 const categoryDataAccessor = new CategoryDataAccessor();

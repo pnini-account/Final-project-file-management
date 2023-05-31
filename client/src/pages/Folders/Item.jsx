@@ -17,6 +17,8 @@ export default function FolderItem(props) {
   const token = sessionStorage.getItem("token");
   const id = props.folder.id;
   const [count, setCount] = useState(0);
+  const [clean, setClean] = useState(true);
+
   const navigate = useNavigate();
   useEffect(()=>{
     const getCount = async () => {
@@ -48,12 +50,15 @@ export default function FolderItem(props) {
   }
 getCount()}, [])
 
-
+const cleanF=()=>{
+setClean(false)
+}
 
   return (
+   
     <>
-      {/* {getInto &&console.log(getInto)&&navigate(`/SingleFolder/${props.folder.id}`)} */}
-      <Card sx={{ maxWidth: 345 }} >
+    {clean&& <Card sx={{ maxWidth: 345 }}>
+ 
         <CardActionArea onClick={() => navigate(`/SingleFolder/${props.folder.id}`)}>
           {/* <CardMedia
             sx={{ height: 140 }}
@@ -75,10 +80,10 @@ getCount()}, [])
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <DeleteFolder id={props.folder.id}></DeleteFolder>
+          <DeleteFolder id={props.folder.id} onDelete={cleanF}/>
         </CardActions>
-      </Card>    <br />
-      <br /><br /><br />
+      </Card>    }
+     
 
     </>)
 }

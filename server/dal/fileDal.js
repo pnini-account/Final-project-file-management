@@ -57,6 +57,8 @@ class FileDataAccessor {
     }
 
     deleteFile = async (id) => {
+        console.log("start delete file");
+
         await File.destroy({where: {id: id}});
         return `file with ID ${id} deleted`;
     }

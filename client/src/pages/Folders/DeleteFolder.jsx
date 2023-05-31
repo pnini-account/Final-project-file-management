@@ -13,19 +13,9 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 const token = sessionStorage.getItem("token");
 
-export default function DeleteFolder(props) {
+export default function DeleteFolder({id,onDelete}) {
   const [open, setOpen] = React.useState(false);
-  const [err, setErr] = useState();
-  const [ok, setOk] = useState(false);
-  const [unauthorized, setUnauthorized] = useState(false);
-  const [actionOK, setActionOK] = useState(false);
-
-
-  const useEffec = (() => {
-    if (err == "") {
-      setOk(true);
-    }
-  }, [err])
+ 
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -38,15 +28,15 @@ export default function DeleteFolder(props) {
 
   const handleClose1 = () => {
     setOpen(false);
-    console.log(props.id)
+    console.log(id)
  
-     deleteCategory(props.id)
+    deleteFolder(id)
   };
 
 
     
 
-    const deleteCategory = async (id) => {
+    const deleteFolder = async (id) => {
         const response = await fetch(`http://localhost:3600/api/folder/${id}`, {
           method: 'DELETE',
           headers: {
@@ -57,12 +47,13 @@ export default function DeleteFolder(props) {
         })
         if (response.ok) {
           console.log("okdeleteFolder"+id);
-          setActionOK(true);
+onDelete(id);
+       
         }
         else {
-          setUnauthorized(true);
+          
           const err = await response.json();
-          setErr(err.message);
+          console.log(err.message);
           
         }
       };
@@ -79,7 +70,7 @@ export default function DeleteFolder(props) {
         <DialogTitle>Delete</DialogTitle>
         <DialogContent>
           <DialogContentText>
-         האם אתה בטוח שברצונך למחוק קובץ זה לצמיתות?
+         האם אתה בטוח שברצונך למחוק תיקייה זה לצמיתות?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

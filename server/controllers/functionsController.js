@@ -10,7 +10,7 @@ const fileController=require("./fileController")
 class FunctionsController{
 //כניסה לקטגוריה
  enterIntoCategory = async (id) => {
-    allFolders = await (folderDal.getFoldersByParentId(id))
+    allFolders = await (folderDal.getFoldersByParentIdCategory(id))
     if (!allFolders) {
         return res.status(400).json({ message: 'folder not found' })
     }
@@ -21,7 +21,7 @@ class FunctionsController{
     const id=req.params.id;
      console.log(id)
 
-    const allFolders = await (folderDal.getFoldersByParentId(id))
+    const allFolders = await (folderDal.getFoldersByParentIdFolder(id))
    
     const allFiles = await (fileDal.getFilesByParentId(id))
     // allFoldersFiles = allFolders.concat(allFiles)

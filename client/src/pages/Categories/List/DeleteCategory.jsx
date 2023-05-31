@@ -13,7 +13,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 const token = sessionStorage.getItem("token");
 
-export default function DeleteCategory(props) {
+export default function DeleteCategory({id,onDelete}) {
   const [open, setOpen] = React.useState(false);
 
 
@@ -28,9 +28,8 @@ export default function DeleteCategory(props) {
 
   const handleClose1 = () => {
     setOpen(false);
-    console.log(props.id)
-
-     deleteCategory(props.id)
+    console.log(id)
+     deleteCategory(id)
   };
 
 
@@ -46,7 +45,7 @@ export default function DeleteCategory(props) {
           body: JSON.stringify()
         })
         if (response.ok) {
-          
+          onDelete(id)
         }
         else {
       
