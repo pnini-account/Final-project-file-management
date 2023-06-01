@@ -12,14 +12,10 @@ import Categories from '.';
 import { Link, useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router-dom';
 import FolderItem from './Item';
-export default function AddFoler({onAdd}) {
+export default function AddFoler({onAdd,fatherType}) {
    
     const navigate = useNavigate();
     const { id } = useParams();
-    
-    const [err, setErr] = useState(false);
-    const [ok, setOk] = useState(false);
-    const [unauthorized, setUnauthorized] = useState(false);
     const [folder, setFolder] = useState();
     useEffect(() => {
         onAdd(folder) 
@@ -27,7 +23,9 @@ export default function AddFoler({onAdd}) {
 
     const addFolderToDB = async (text) => {
         const token = sessionStorage.getItem("token");
-        const responseOfFolder = await fetch(`http://localhost:3600/api/folder`, {
+        let responseOfFolder; 
+        if(fatherType=='f'){
+        responseOfFolder = await fetch(`http://localhost:3600/api/folder`, {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json',
@@ -35,19 +33,31 @@ export default function AddFoler({onAdd}) {
 
             },
             body: JSON.stringify({ parentId_category: null, parentId_folder: id, name: text })
-        })       
+        }) }
+        else
+        {    
+         responseOfFolder = await fetch(`http://localhost:3600/api/folder`, {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': `Bearer ${token}`
 
-        if (responseOfFolder.ok) {
+            },
+            body: JSON.stringify({ parentId_category: id, parentId_folder: null, name: text })
+        })  }      
+ 
+
+      
             if (responseOfFolder.ok) {
                 setFolder(await responseOfFolder.json())
             }
             else {
-                setUnauthorized(true);
+                
                 const err = await responseOfFolder.json();
-                setErr(err.message);
+               
                 console.log(err.message)
             }
-        }
+        
     }
 
     const [open, setOpen] = React.useState(false);

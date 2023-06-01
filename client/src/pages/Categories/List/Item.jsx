@@ -17,13 +17,16 @@ import { CardActionArea } from "@mui/material";
 export default function Item  (props){
    const [getInto, setGetInto] = useState(false);
    const [sendEmailDetails, setSendEmailDetails] = useState(false);
-   const [actionOK, setActionOK] = useState(false);
+   const [clean, setClean] = useState(true);
    const [category, setCategory] = useState(props.category);
 
    const token = sessionStorage.getItem("token");
 
    const navigate = useNavigate();
+const cleanF=()=>{
+setClean(false)
 
+}
     useEffect(() => {    
        {getInto && navigate(`/SingleCategory/${category.id}`)}
     }, [getInto])
@@ -33,7 +36,7 @@ export default function Item  (props){
 
  
 return(
- <>  
+ <>  {clean&&
         <Card sx={{ maxWidth: 345 }} >
          <CardActionArea onClick={()=>{setGetInto(true)}}>
           <CardMedia
@@ -56,12 +59,12 @@ return(
             </CardActionArea>
             <CardActions>
             <UpdateCategory id={category.id} setCategory={setCategory} category={category}></UpdateCategory>
-            <DeleteCategory id={category.id}></DeleteCategory>
+            <DeleteCategory id={category.id} onDelete={cleanF}></DeleteCategory>
             </CardActions>
 
             
       
-        </Card>    <br/>
+        </Card> }   <br/>
            <br/><br/><br/>
         
    </>)

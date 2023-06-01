@@ -13,7 +13,6 @@ const Category = () => {
 
     const fetchData = (list) => {
         setListOfCategory(list)
-
     }
     const addNewCategory = (category) => {
         setListOfCategory([...listOfCategory, category])
@@ -30,7 +29,7 @@ const Category = () => {
         <Breadcrumb></Breadcrumb>
         <SearchComp clean={cleanFunc}></SearchComp>
         {clean && <>
-            <Categories fetchData={fetchData}></Categories>
+            <Categories></Categories>
         </>
         }
         {/* <Categories></Categories> */}

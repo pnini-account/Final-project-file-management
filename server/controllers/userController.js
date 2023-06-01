@@ -1,4 +1,6 @@
 const userDal = require("../dal/userDal");
+const folderDal = require("../dal/folderDal");
+const categoryDal = require("../dal/categoryDal");
 
 class userController {
 
@@ -6,7 +8,18 @@ class userController {
         // Get all notes from DB
         res.send(await userDal.getAllUsers());
     }
-
+    getAllItemsForUser=async(req,res)=>{
+        const id=req.user.id;
+        console.log("id"+id)
+       const allFolders = await (folderDal.getAllFoldersForUser(id))
+       const allCategories = await (categoryDal.getAllCategorysForUser(id))
+       // allFoldersFiles = allFolders.concat(allFiles)
+       const allItemsForUser={"allFolders":allFolders,"allCategories":allCategories}
+       if (!allItemsForUser) {
+           return res.status(400).json({ message: 'no' })
+       }
+       res.send(allItemsForUser)
+    }
     addNewUser = async(req, res) => {
         const userData = req.query
         // Confirm data

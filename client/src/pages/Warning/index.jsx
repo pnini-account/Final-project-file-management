@@ -8,7 +8,7 @@ const Warnings = () => {
     <Breadcrumb></Breadcrumb>
     <h1>דף אזהרות מלאות</h1>
     <Warning></Warning>
-    <WarningsList></WarningsList>
+    {/* <WarningsList></WarningsList> */}
     </>)
 }
 export default Warnings;

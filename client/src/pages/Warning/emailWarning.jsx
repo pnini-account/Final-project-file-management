@@ -11,17 +11,14 @@ import { useParams } from 'react-router-dom';
 
 const token = sessionStorage.getItem("token");
 
-export default function EmailWarning() {
+export default function EmailWarning(props) {
   console.log("EmailDetails")
   const [open, setOpen] = React.useState(false);
-  const [subject, setSubject] = useState();
-  const [message, setMessage] = useState();
   const [err, setErr] = useState();
   const [ok, setOk] = useState(false);
   const [unauthorized, setUnauthorized] = useState(false);
   const [actionOK, setActionOK] = useState(false);
 
-  const { id } = useParams();
   const useEffec = (() => {
     if (err == "") {
       setOk(true);
@@ -41,15 +38,16 @@ export default function EmailWarning() {
     sendEmail();
   };
 
+  const text = props.text;
   const sendEmail = async () => {
     console.log("sendEmail");
-    const response = await fetch(`http://localhost:3600/api/email/file/${id}`, {
+    const response = await fetch(`http://localhost:3600/api/email/warning/${props.id}`, {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
         'authorization': `Bearer ${token}`
       },
-      body: JSON.stringify({ message: message,subject:subject})
+      body: JSON.stringify({text:text ,fileId:props.fileId})
     })
     if (response.ok) {
       console.log("oksendEmail");
@@ -68,7 +66,8 @@ export default function EmailWarning() {
       </Button>
       {console.log("ddd")}
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Email Details</DialogTitle>
+        <DialogTitle>Send Email of warning?</DialogTitle>
+        {/* 
         <DialogContent>
           <DialogContentText>
           </DialogContentText>
@@ -92,7 +91,7 @@ export default function EmailWarning() {
             variant="standard"
             onChange={(e) => setMessage(e.target.value)}
           />
-        </DialogContent>
+        </DialogContent> */}
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleClose1}>Send Email</Button>

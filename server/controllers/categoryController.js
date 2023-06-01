@@ -29,17 +29,18 @@ class categoryController {
         console.log(id)
         console.log("++++++++++++++++++++")
 
-        res.json(await folderDal.getFoldersByParentId(id)); 
+        res.json(await folderDal.getFoldersByParentIdCategory(id)); 
     }
 
     updateCategory = async(req, res) => {
         const id  = req.params.id;
-        const { newid, color, img, text  } = req.query   
+        const {  color, img, text  } = req.body 
+        console.log({text});  
         // Confirm data
         if (!id) {
         return res.status(400).json({ message: 'Id fields are required' })
         }
-        res.send(await categoryDal.updateCategory(id ,newid, color, img, text ));  
+        res.send(await categoryDal.updateCategory(id , color, img, text ));  
     }
 
     deleteCategory = async(req, res) => {

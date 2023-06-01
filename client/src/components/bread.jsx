@@ -10,24 +10,25 @@ function handleClick(event) {
   console.info('You clicked a breadcrumb.');
 }
 
-export default function Breadcrumb() {
-  const breadcrumbs = [
-    <Link underline="hover" key="1" color="inherit" href="/" onClick={handleClick}>
-      MUI
-    </Link>,
-    <Link
-      underline="hover"
-      key="2"
-      color="inherit"
-      href="/material-ui/getting-started/installation/"
-      onClick={handleClick}
-    >
-      Core
-    </Link>,
-    <Typography key="3" color="text.primary">
-      Breadcrumb
-    </Typography>,
-  ];
+export default function Breadcrumb({breadcrumcs}) {
+//   if(breadcrumcs.length!==0){
+//   console.log({breadcrumcs});
+//   const breadcrumbs = [
+//     <Link underline="hover" key="1" color="inherit" href="/" onClick={handleClick}>
+// d  </Link>,
+//     <Link
+//       underline="hover"
+//       key="2"
+//       color="inherit"
+//       href="/material-ui/getting-started/installation/"
+//       onClick={handleClick}
+//     >
+// d
+//     </Link>,
+//     <Typography key="3" color="text.primary">
+//       Breadcrumb
+//     </Typography>,
+//   ];}
 
   return (
     <Stack spacing={2}>
@@ -36,7 +37,7 @@ export default function Breadcrumb() {
         separator={<NavigateNextIcon fontSize="small" />}
         aria-label="breadcrumb"
       >
-        {breadcrumbs}
+        {/* {breadcrumbs} */}
       </Breadcrumbs>
     </Stack>
   );

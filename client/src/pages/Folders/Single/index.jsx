@@ -25,22 +25,22 @@ import SearchComp from '../../../components/Search';
 
 export default function SingleFolder(props) {
     const navigate = useNavigate();
-    const [unauthorized, setUnauthorized] = useState(false);
-    const [err, setErr] = useState();
-    const [ok, setOk] = useState(false);
+
     const token = sessionStorage.getItem("token");
     const [listOfFolders, setListOfFolders] = useState([]);
     const [listOfFiles, setListOfFiles] = useState([]);
     const [hasFolders, setHasFolders] = useState(false)
     const [hasFiles, setHasFiles] = useState(false)
-    const [getIntoFolder, setGetIntoFolder] = useState(false)
     const [clean, setClean] = useState(true)
-
+    const [userFolders, setUserFolders] = useState([]);
+    const [userCategoris, setUserCategoris] = useState([]);
     const { id } = useParams()
+    const [breadcrumcs, setBreadCrumb] = useState([])
+    const [currentBreadCrumb, setCurrentBreadCrumb] = useState({})
     const cleanFunc = () => {
         setClean(false)
     }
-    
+
     const addNewFolder = (folder) => {
         setListOfFolders([...listOfFolders, folder])
     }
@@ -56,11 +56,12 @@ export default function SingleFolder(props) {
         const del = listOfFiles.indexOf(file);
         const newListOfFiles = listOfFiles.slice(del, 1)
         setListOfFiles(newListOfFiles);
-        if (listOfFiles.length ===0) {
+        if (listOfFiles.length === 0) {
             setHasFiles = false
         }
 
     }
+
 
     useEffect(() => {
         const GetAllFoldersFiles = async () => {
@@ -69,16 +70,15 @@ export default function SingleFolder(props) {
                 headers: {
                     'Content-Type': 'application/json',
                     'authorization': `Bearer ${token}`
-    
+
                 }
             }).then(console.log("folder", id))
-    
-    
+
+
             if (responseOfFolderFilse.ok) {
                 const data = await responseOfFolderFilse.json();
-                setOk(true)
                 setListOfFolders(data.allFolders)
-                setListOfFiles(data.allFiles)    
+                setListOfFiles(data.allFiles)
                 if (data.allFiles.length !== 0) {
                     setHasFiles(true)
                 }
@@ -86,47 +86,96 @@ export default function SingleFolder(props) {
                     setHasFolders(true)
                 }
             }
-    
+
             else {
-                setUnauthorized(true);
+
                 const err = await responseOfFolderFilse.json();
-                setErr(err.message);
                 console.log(err.message)
             }
-    
+
+        }
+        const getAllItemsForUser = async () => {
+            const allItems = await fetch(`http://localhost:3600/api/user`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': `Bearer ${token}`
+
+                }
+            })
+
+            if (allItems.ok) {
+                const data = await allItems.json();
+                console.log(data.allCategories + 'before set');
+                setUserCategoris(data.allCategories)
+                setUserFolders(data.allFolders)
+                // console.log('after set'+ userCategoris );
+            }
+
+            else {
+
+                const err = await allItems.json();
+
+                console.log(err.message)
+            }
+
         }
         GetAllFoldersFiles()
+        getAllItemsForUser()
 
     }, [id])
-const breadcrumcs=[id]
-//const [currentBreadCrumb,setCurrentBreadCrumb]=useState(folders.find(f=>f.id===id))
 
-// categories
-// folders
+    useEffect(() => {
+        console.log({ userCategoris });
+        console.log({ userFolders });
+        const folder = userFolders.find(f => f.id == id);
+        console.log({ folder });
+        if (folder) {
+            setBreadCrumb([folder])
+            setCurrentBreadCrumb(folder)
+        }
+    }, [userFolders, userCategoris])
 
-// while (!currentBreadCrumb.parentCategory){
-//          breadcrumcs.push(currentBreadCrumb.parent)
-//          setCurrentBreadCrumb(folders.find(f=>f.id===currentBreadCrumb.parent))
+    useEffect(() => {
+        if (breadcrumcs.length !== 0) {
+            console.log(breadcrumcs.length !== 0);
+            console.log({ breadcrumcs });
+            console.log({ currentBreadCrumb });
+            console.log({ breadcrumcs });
+            
 
-// breadcrumcs.push(currentBreadCrumb.parentCategory)
-//<Be
-   console.log({hasFiles, listOfFiles});
+            if (currentBreadCrumb.parentId_category===null) 
+            {
+                breadcrumcs.push(userFolders.find(f => f.id === currentBreadCrumb.parentId_folder))
+                setCurrentBreadCrumb(userFolders.find(f => f.id === currentBreadCrumb.parentId_folder))
+            }
+            breadcrumcs.push(userCategoris.find(f => f.id === currentBreadCrumb.parentId_category))
+            console.log(breadcrumcs.length !== 0);
+            console.log({ breadcrumcs });
+            console.log({ currentBreadCrumb });
+            console.log({ breadcrumcs });
+        }
+
+        else
+        console.log("loooooooooooooooooooooooozer");
+    }, [currentBreadCrumb])
+
     return (
         <><h1>{id}</h1>
-            <Breadcrumb />
-            <ResponsiveAppBar/>
-            <SearchComp/>
+            <Breadcrumb breadcrumcs={breadcrumcs} />
+            <ResponsiveAppBar />
+            <SearchComp />
             <AddFile onAdd={addNewFile} />
-            <AddFoler onAdd={addNewFolder}/>
+            <AddFoler onAdd={addNewFolder} fatherType='f' />
             {/* <Grid container spacing={1}>
                 {hasFolders && listOfFolders.map((i, ind) => <Grid key={ind} item xs={4}> <FolderItem key={ind} folder={i} setGetIntoFolder={setGetIntoFolder}></FolderItem></Grid>)}
             </Grid>
             <Grid container spacing={1}>
                 {hasFiles&& listOfFiles.map((i, ind) => <Grid key={ind} item xs={4}><FileItem key={ind} file={i} /></Grid>) }
             </Grid> */}
-            {clean&&<>{hasFolders ? listOfFolders.map((i,ind) => <Grid key={ind} item xs={4}> <FolderItem key={ind} folder={i}></FolderItem></Grid>) : <></>}
-                {hasFiles ? listOfFiles.map((i,ind) => <Grid key={ind} item xs={4}><FileItem key={ind} file={i} ></FileItem></Grid>) : <></>}</>}
-            
+            {clean && <>{hasFolders ? listOfFolders.map((i, ind) => <Grid key={ind} item xs={4}> <FolderItem key={ind} folder={i}></FolderItem></Grid>) : <></>}
+                {hasFiles ? listOfFiles.map((i, ind) => <Grid key={ind} item xs={4}><FileItem key={ind} file={i} ></FileItem></Grid>) : <></>}</>}
+
         </>
     )
 }

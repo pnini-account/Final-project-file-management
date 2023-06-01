@@ -74,20 +74,23 @@ export default function SearchComp({clean}) {
       console.log("ppp")
       console.log(response)
 
-      const data = await response.json();
+      const data = await response.json() ;
       setListOfCategory(data.categories)
       setListOfFolder(data.folders)
       setListOfFile(data.files)
-      clean()
+      if(data.length!==0)
+      {
+        console.log({data});
+        clean()
+      }
+      
        console.log(listOfCategory)
        console.log(listOfFile)
        console.log(listOfFolder)
 
     }
     else {
-      console.log("ppqqqqqqp")
-
-      setUnauthorized(true);
+        setUnauthorized(true);
       const err = await response.json();
       setErr(err.message);
       console.log(err.message)
@@ -106,9 +109,9 @@ return (
       onChange={(e) => { setQuery(e.target.value) }}
       inputProps={{ 'aria-label': 'search' }}
     />
-    {listOfCategory.map((c,ind)=><CategoryList key={ind} category={c}></CategoryList>)}
-    {listOfFolder.map((c,ind)=><FolderList key={ind} folder={c}/>)}
-    {listOfFile.map((c,ind)=><FileList key={ind} file={c}/>)}
+    {listOfCategory?.map((c,ind)=><CategoryList key={ind} category={c}></CategoryList>)}
+    {listOfFolder?.map((c,ind)=><FolderList key={ind} folder={c}/>)}
+    {listOfFile?.map((c,ind)=><FileList key={ind} file={c}/>)}
 
   </Search>
 );

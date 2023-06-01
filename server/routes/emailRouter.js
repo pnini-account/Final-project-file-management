@@ -4,6 +4,6 @@ const emailController = require("../controllers/emailController")
 
 router.post('/file/:id', emailController.sendEmailOfFile)
 
-router.post('/warning', emailController.sendEmailOfWarning)
+router.post('/warning/:id', emailController.sendEmailOfWarning)
 
 module.exports = router

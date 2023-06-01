@@ -1,5 +1,7 @@
 
-const db = require('../models/index')
+const { DATE } = require('sequelize');
+const db = require('../models/index');
+const { checkout } = require('../routes/root');
 const Warning = db.warning
 
 class WarningDataAccessor {
@@ -11,14 +13,28 @@ class WarningDataAccessor {
     }
 
     init = async () => {
-         this.db = db;
-         this.Warning = Warning;
+        this.db = db;
+        this.Warning = Warning;
     }
 
     getAllWarnings = async (user_id) => {
-        // Get all notes from DB
-        const warnings = await Warning.findAll({where:{user_id:user_id}})
-        // If no notes
+
+        let warnings = await Warning.findAll({ where: { user_id: user_id } })
+        if (!warnings?.length) {
+            return res.status(400).json({ message: 'No warnings found' })
+        }
+        const checkout = (w) => {
+            const d = new Date();
+            return d > w.date
+        }
+
+        warnings = warnings.filter(w => checkout(w))
+        console.log(warnings.length);
+        return warnings;
+    }
+    getAllWarningsWithNew = async (user_id) => {
+        const d = new Date();
+        const warnings = await Warning.findAll({ where: { user_id: user_id } })
         if (!warnings?.length) {
             return res.status(400).json({ message: 'No warnings found' })
         }
@@ -33,17 +49,17 @@ class WarningDataAccessor {
             return 'New warning created'
         }
     }
- 
+
     getWarningById = async (id) => {
-        const warning = await Warning.findOne({where:{id:id}})
+        const warning = await Warning.findOne({ where: { id: id } })
         // return json(user)
         return warning;
     }
 
-    updateWarning = async (id , userid, fileid, text, snooze) => {
-        const warning = await Warning.update({ userid, fileid, text, snooze},{where:{id:id}})
+    updateWarning = async (id, userid, fileid, text, snooze) => {
+        const warning = await Warning.update({ userid, fileid, text, snooze }, { where: { id: id } })
         if (!warning) {
-        return res.status(400).json({ message: 'warning not found' })
+            return res.status(400).json({ message: 'warning not found' })
         }
         return `warning with ID ${id} updated`
     }
@@ -51,7 +67,7 @@ class WarningDataAccessor {
     deleteWarning = async (id) => {
         const Id = id.id;
         console.log(id.id)
-        await Warning.destroy({where: {id: Id}});
+        await Warning.destroy({ where: { id: Id } });
         return `warning with ID ${id} deleted`
     }
 }

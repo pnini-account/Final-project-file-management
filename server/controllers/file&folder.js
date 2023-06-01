@@ -5,7 +5,7 @@ const fileDal = require("../dal/fileDal");
 class fileAndFolder{
 enterIntoFolder = async (id) => {
     const folderAndFile=[];
-    allFolders = await (folderDal.getFoldersByParentId(id))
+    allFolders = await (folderDal.getFoldersByParentIdFolder(id))
     allFiles = await (fileDal.getFilesByParentId(id))
     folderAndFile[folders]=allFolders;
     folderAndFile[files]=allFiles;

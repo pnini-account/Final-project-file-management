@@ -20,15 +20,14 @@ const Categories = () => {
     const [render, setRender] = useState(false);
     const [listOfCategory, setListOfCategory] = useState([]);
     //const [flag, setFlag] = useState(false);
-    const [err, setErr] = useState();
-    const [ok, setOk] = useState(false);
     useEffect(() => {
         console.log("Im in useEffect");
         const token = sessionStorage.getItem("token");
 
-        async function fetchData(props) {
+        async function fetchData() {
             console.log("token",{token});
-            const response = await fetch("http://localhost:3600/api/category", {
+            const response = await fetch("http://localhost:3600/api/category",
+             {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -42,7 +41,7 @@ const Categories = () => {
                 const data = await response.json();
 
                 console.log({data});
-                setListOfCategory(data)  ;              console.log({listOfCategory});
+                setListOfCategory([...data])
 
             //    props.fetchData(listOfCategory)
             }
@@ -64,7 +63,7 @@ const Categories = () => {
     console.log(listOfCategory);
     {/* <Item folder={i}></Item> */ }
     return (<>
-        <AddCategory addOne={add}></AddCategory>
+    <AddCategory addOne={add}/>
        <Grid container spacing={1}>
         {listOfCategory.map((i,ind) => <Grid item xs={4}><Item key={ind} category={i} render={renderFunc}/></Grid>)}
 

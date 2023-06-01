@@ -23,7 +23,7 @@ class FilterController {
         res.send(filtered);
     }
     get = async (req, res) => {
-      res.send()
+      res.send([])
     }
 
   

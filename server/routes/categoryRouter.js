@@ -10,7 +10,7 @@ categoryRouter.route("/")
     .get(categoryController.getAllCategorysForUser)
 categoryRouter.route("/:id")
     .get(categoryController.getAllFoldersForCategory)
-    .patch(categoryController.updateCategory)//todo:להפריד עדכון של שם, תמונה וצבע... 
+    .put(categoryController.updateCategory)//todo:להפריד עדכון של שם, תמונה וצבע... 
     //todo:searchCategory function
     .delete(categoryController.deleteCategory);
 
