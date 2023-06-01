@@ -57,12 +57,6 @@ class FolderDataAccessor {
     }
     getFoldersByParentIdCategory = async (id) => {
         const folder = await Folder.findAll({ where: { [Op.or]: { parentId_category: id } } })
-
-        console.log("___________44___________")
-        console.log(folder)
-        console.log("____________33__________")
-
-        // return json(user)
         return folder;
     }
 

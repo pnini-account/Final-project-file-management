@@ -29,19 +29,18 @@ class warningController {
     }
 
     updateWarning = async(req, res) => {
+        
         const id  = req.params.id;
-        const { userid, fileid, text, snooze } = req.query   
-        // Confirm data
+        const { userid, fileid, text, snooze,is_read } = req.body;
         if (!id) {
         return res.status(400).json({ message: 'Id fields are required'
         })
         }
-        res.send(await warningDal.updateWarning(id , userid, fileid, text, snooze));  
+        res.send(await warningDal.updateWarning(id , userid, fileid, text, snooze,is_read));  
     }
 
     deleteWarning = async(req, res) => {
-        const id = req.body.id     
-        console.log("id "+id)
+        const id = req.params.id     
         // Confirm data
         if (!id) {
         return res.status(400).json({ message: 'warning ID required' })

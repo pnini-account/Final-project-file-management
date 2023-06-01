@@ -50,6 +50,8 @@ class CategoryDataAccessor {
         return category;
     }
 
+            
+
     updateCategory = async (id , color, img, text ) => {
         console.log("in update");
         console.log({text});  

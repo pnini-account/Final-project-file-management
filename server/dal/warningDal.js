@@ -56,8 +56,9 @@ class WarningDataAccessor {
         return warning;
     }
 
-    updateWarning = async (id, userid, fileid, text, snooze) => {
-        const warning = await Warning.update({ userid, fileid, text, snooze }, { where: { id: id } })
+    updateWarning = async (id, userid, fileid, text, snooze,is_read) => {
+        console.log("update"+is_read);
+        const warning = await Warning.update({ userid, fileid, text, snooze,is_read }, { where: { id: id } })
         if (!warning) {
             return res.status(400).json({ message: 'warning not found' })
         }
@@ -65,9 +66,9 @@ class WarningDataAccessor {
     }
 
     deleteWarning = async (id) => {
-        const Id = id.id;
-        console.log(id.id)
-        await Warning.destroy({ where: { id: Id } });
+        
+        console.log(id)
+        await Warning.destroy({ where: { id: id } });
         return `warning with ID ${id} deleted`
     }
 }

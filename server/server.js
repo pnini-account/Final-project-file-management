@@ -29,6 +29,7 @@ app.use("/api/folder",require("./routes/folderRouter"));
 app.use("/api/category",require("./routes/categoryRouter"));
 app.use("/api/email",require("./routes/emailRouter"));
 app.use("/api/upload", require("./routes/uploadRoutes"));
+app.use("/api/count", require("./routes/countRouter"));
 
 app.all('*', (req, res) => {
     res.status(404)

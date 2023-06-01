@@ -22,6 +22,12 @@ class categoryController {
         const id = req.user.id;
         res.json(await categoryDal.getAllCategorysForUser(id));
     }
+    getCount = async(req, res) => {
+        const id = req.user.id;
+        const c=await folderDal.getFoldersByParentIdCategory(id); 
+        console.log(c.length);
+        res.json(c.length)
+    }
 
     getAllFoldersForCategory=async(req,res)=>{
         const id = req.params.id;

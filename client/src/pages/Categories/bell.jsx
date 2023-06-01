@@ -37,7 +37,8 @@ export default function WarningsDetails() {
       console.log("data");
       console.log(data);
       let warning = data;
-      warning = warning.filter(w => !w.is_read)
+      console.log({warning});
+      warning = warning.filter(w => w.is_read!==1)
       setNewWarnings(warning)
       
 
