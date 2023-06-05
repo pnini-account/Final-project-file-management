@@ -125,44 +125,44 @@ export default function SingleFolder(props) {
 
     }, [id])
 
-    useEffect(() => {
-        console.log({ userCategoris });
-        console.log({ userFolders });
-        const folder = userFolders.find(f => f.id == id);
-        console.log({ folder });
-        if (folder) {
-            setBreadCrumb([folder])
-            setCurrentBreadCrumb(folder)
-        }
-    }, [userFolders, userCategoris])
+    // useEffect(() => {
+    //     console.log({ userCategoris });
+    //     console.log({ userFolders });
+    //     const folder = userFolders.find(f => f.id == id);
+    //     console.log({ folder });
+    //     if (folder) {
+    //         setBreadCrumb([folder])
+    //         setCurrentBreadCrumb(folder)
+    //     }
+    // }, [userFolders, userCategoris])
 
-    useEffect(() => {
-        if (breadcrumcs.length !== 0) {
-            console.log(breadcrumcs.length !== 0);
-            console.log({ breadcrumcs });
-            console.log({ currentBreadCrumb });
-            console.log({ breadcrumcs });
+    // useEffect(() => {
+    //     if (breadcrumcs.length !== 0) {
+    //         console.log(breadcrumcs.length !== 0);
+    //         console.log({ breadcrumcs });
+    //         console.log({ currentBreadCrumb });
+    //         console.log({ breadcrumcs });
             
 
-            if (currentBreadCrumb.parentId_category===null) 
-            {
-                breadcrumcs.push(userFolders.find(f => f.id === currentBreadCrumb.parentId_folder))
-                setCurrentBreadCrumb(userFolders.find(f => f.id === currentBreadCrumb.parentId_folder))
-            }
-            breadcrumcs.push(userCategoris.find(f => f.id === currentBreadCrumb.parentId_category))
-            console.log(breadcrumcs.length !== 0);
-            console.log({ breadcrumcs });
-            console.log({ currentBreadCrumb });
-            console.log({ breadcrumcs });
-        }
+    //         if (currentBreadCrumb.parentId_category===null) 
+    //         {
+    //             breadcrumcs.push(userFolders.find(f => f.id === currentBreadCrumb.parentId_folder))
+    //             setCurrentBreadCrumb(userFolders.find(f => f.id === currentBreadCrumb.parentId_folder))
+    //         }
+    //         breadcrumcs.push(userCategoris.find(f => f.id === currentBreadCrumb.parentId_category))
+    //         console.log(breadcrumcs.length !== 0);
+    //         console.log({ breadcrumcs });
+    //         console.log({ currentBreadCrumb });
+    //         console.log({ breadcrumcs });
+    //     }
 
-        else
-        console.log("loooooooooooooooooooooooozer");
-    }, [currentBreadCrumb])
+    //     else
+    //     console.log("loooooooooooooooooooooooozer");
+    // }, [currentBreadCrumb])
 
     return (
         <><h1>{id}</h1>
-            <Breadcrumb breadcrumcs={breadcrumcs} />
+            <Breadcrumb type={2} />
             <ResponsiveAppBar />
             <SearchComp />
             <AddFile onAdd={addNewFile} />

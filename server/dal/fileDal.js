@@ -16,6 +16,10 @@ class FileDataAccessor {
          this.db = db;
          this.File = File;
     }
+    getFile = async(id)=>{
+        const file = await File.findAll({id:id})
+return file;
+    }
 
     getAllFilesForUser = async(id)=>{
         const files = await File.findAll({userId:id})
@@ -42,7 +46,7 @@ class FileDataAccessor {
 
     getFilesByParentId = async (id) => {
         const file = await File.findAll({where:{folderId:id}})
-        console.log(file)
+        
         return file;
     }
 

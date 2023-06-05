@@ -19,6 +19,7 @@ import AddCategory from '../List/AddCategory';
 import { Grid } from '@mui/material';
 import ResponsiveAppBar from '../../../components/Navbar';
 import SearchComp from '../../../components/Search';
+import Breadcrumb from '../../../components/bread';
 
 
 
@@ -69,11 +70,13 @@ export default function SingleCategory(props) {
         <div>
             <ResponsiveAppBar></ResponsiveAppBar>
             <SearchComp></SearchComp>
-            <AddFoler onAdd={addNewFolder}  fatherType={'c'}/>
+            
+            <Breadcrumb type={1}></Breadcrumb>
+            {/* <AddFoler onAdd={addNewFolder}  fatherType={'c'}/>
             {/* <AddFile onAdd={addNewFile} /> */}
             <Grid container spacing={1}>
                 {hasFolders && <><>{listOfFolders.map((i) => <Grid item xs={4}> <FolderItem key={i.id} folder={i}></FolderItem></Grid>)}</></>}
-            </Grid>
+            </Grid> 
         </div>
     )
 }

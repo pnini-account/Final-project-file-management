@@ -15,6 +15,7 @@ import { Grid } from '@mui/material';
 import ResponsiveAppBar from '../../components/Navbar';
 import SearchComp from '../../components/Search';
 import AddFile from '../Files/AddFile';
+import Breadcrumb from '../../components/bread';
 export default function Single(props) {
 
     const navigate = useNavigate();
@@ -98,6 +99,7 @@ export default function Single(props) {
           <ResponsiveAppBar></ResponsiveAppBar>
           <h1>דוגמא</h1>
           <SearchComp></SearchComp>
+          <Breadcrumb type={2}></Breadcrumb>
             <AddFoler onAdd={addNewFolder} fatherType={'f'} />
             <AddFile onAdd={addNewFile} />
             {clean&&<>

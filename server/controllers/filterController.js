@@ -12,7 +12,7 @@ class FilterController {
       var query=req.params.stringQuery;
       
      
-        console.log({folders})
+        // console.log({folders})
         const result = typeof str === 'string' ? str.toLowerCase() : '';
 // f.name===null||query===""||
         folders = folders.filter((f)=>f.name.toLowerCase().indexOf(query) > -1)

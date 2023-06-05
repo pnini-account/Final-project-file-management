@@ -19,14 +19,13 @@ class FunctionsController{
 //כניסה לתיקייה 
  enterIntoFolder = async (req,res) => {
     const id=req.params.id;
-     console.log(id)
 
     const allFolders = await (folderDal.getFoldersByParentIdFolder(id))
    
     const allFiles = await (fileDal.getFilesByParentId(id))
     // allFoldersFiles = allFolders.concat(allFiles)
     const count=allFiles.length+allFolders.length;
-    console.log({count});
+    // console.log({count});
     const allFoldersFiles={"allFolders":allFolders,"allFiles":allFiles,"count":count}
     if (!allFoldersFiles) {
         return res.status(400).json({ message: 'folder or files not found' })

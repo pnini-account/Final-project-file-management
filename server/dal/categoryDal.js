@@ -18,6 +18,10 @@ class CategoryDataAccessor {
         this.db = db;
         this.Category = Category;
     }
+    getCategory=async(id) => {
+        const category = await Category.findAll({where: { id: 7 }})
+        return category[0];
+    }
 
     getAllCategorys = async () => {
         // Get all notes from DB
@@ -64,6 +68,14 @@ class CategoryDataAccessor {
 
         return `category with ID ${id} updated`
     }
+    
+    getCountOfCategory=async(id)=>{     
+        
+       const folders=await folderDal.getFoldersByParentIdCategory(id);
+    //    console.log({folders});
+       return(folders.length);
+
+    }
 
     deleteCategory = async (id) => {
 
@@ -72,7 +84,6 @@ class CategoryDataAccessor {
                 parentId_folder: id
             }
         });
-        console.log(folders[0]);
 
 
 

@@ -16,6 +16,10 @@ class FolderDataAccessor {
         this.db = db;
         this.collection = Folder;
     }
+getFolder = async (id) => {
+    const folder = await Folder.findAll({ where: { id: id } })
+    return folder[0];
+}
 
     getAllFoldersForUser = async (id) => {
         const folder = await Folder.findAll({ where: { user_id: id } })
@@ -48,15 +52,13 @@ class FolderDataAccessor {
     getFoldersByParentIdFolder = async (id) => {
         const folder = await Folder.findAll({ where: { [Op.or]: { parentId_folder: id }} })
 
-        console.log("666666666666666666666666666666")
-        console.log(folder)
-        console.log("77777777777777777777777777777777")
+ 
 
         // return json(user)
         return folder;
     }
     getFoldersByParentIdCategory = async (id) => {
-        const folder = await Folder.findAll({ where: { [Op.or]: { parentId_category: id } } })
+       const folder = await Folder.findAll({ where: { [Op.or]: { parentId_category: id } } })
         return folder;
     }
 

@@ -10,7 +10,7 @@ class userController {
     }
     getAllItemsForUser=async(req,res)=>{
         const id=req.user.id;
-        console.log("id"+id)
+        // console.log("id"+id)
        const allFolders = await (folderDal.getAllFoldersForUser(id))
        const allCategories = await (categoryDal.getAllCategorysForUser(id))
        // allFoldersFiles = allFolders.concat(allFiles)
