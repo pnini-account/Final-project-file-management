@@ -75,7 +75,7 @@ export default function SingleCategory(props) {
             {/* <AddFoler onAdd={addNewFolder}  fatherType={'c'}/>
             {/* <AddFile onAdd={addNewFile} /> */}
             <Grid container spacing={1}>
-                {hasFolders && <><>{listOfFolders.map((i) => <Grid item xs={4}> <FolderItem key={i.id} folder={i}></FolderItem></Grid>)}</></>}
+                {hasFolders && <><>{listOfFolders.map((i,ind) => <Grid item xs={4} key={ind}> <FolderItem key={ind} folder={i}></FolderItem></Grid>)}</></>}
             </Grid> 
         </div>
     )

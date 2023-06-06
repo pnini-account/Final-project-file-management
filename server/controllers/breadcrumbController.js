@@ -11,7 +11,6 @@ class CountController {
             return c;
         }
         async function getFoldersToUrl(id) {
-            console.log("getFoldersToUrl");
             const folder = await FolderDal.getFolder(id);
             const f = { name: folder.name, type: 2, id: folder.id }
             return f;
@@ -20,23 +19,26 @@ class CountController {
         async function getFolderUrl(id, url) {
             const fol = await FolderDal.getFolder(id);
             if (fol.parentId_category) {
-
+                
                 const idCategory = fol.parentId_category;
                 const c = await getCategoryToUrl(idCategory)
                 url.push(c);
+              
                 const f = await getFoldersToUrl(id);
-                url.push(f);
+                url.push(f); 
+              
                 return url;
             }
+            else{
             url = await getFolderUrl(fol.parentId_folder, url);
-            const f = getFoldersToUrl(id);
+            const f =await getFoldersToUrl(id);
             url.push(f);
-            return url;
+            return url;}
         }
         const type = req.body.type;
         const id = req.params.id;
         var url = [];
-        console.log("getUrlArray");
+        console.log({id});
         if (type === 1) {
             const c = await getCategoryToUrl(id)
             console.log({ c });
@@ -44,7 +46,7 @@ class CountController {
             console.log({ url });
         }
         if (type === 2) {
-            getFolderUrl(id, url)
+            url = await getFolderUrl(id, url)
         }
         if (type === 3) {
             const file = await FileDal.getFile(id)
@@ -53,7 +55,7 @@ class CountController {
             const f = { name: file.name, type: 3, id: file.id }
             url.push(f)
         }
-        console.log({url});
+        console.log({ url });
         res.json(url);
 
     }

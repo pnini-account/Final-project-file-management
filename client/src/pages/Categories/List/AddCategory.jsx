@@ -73,7 +73,12 @@ export default function AddCategory({addOne}) {
                         variant="standard"
                         onChange={(e) => setName(e.target.value)}
                     />
-                    <TextField
+                    <input type="color"></input>
+                    <br></br>
+                    <input type="file"  />
+
+                  
+                    {/* 
                         autoFocus
                         margin="dense"
                         id="Color"
@@ -83,7 +88,8 @@ export default function AddCategory({addOne}) {
                         variant="standard"
                         onChange={(e) => setColor(e.target.value)}
 
-                    />    <TextField
+                    />   */}
+                     {/* <TextField 
                         autoFocus
                         margin="dense"
                         id="Img"
@@ -93,7 +99,7 @@ export default function AddCategory({addOne}) {
                         variant="standard"
                         onChange={(e) => setImg(e.target.value)}
 
-                    />
+                    /> */}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>

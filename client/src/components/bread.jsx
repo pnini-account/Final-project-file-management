@@ -1,12 +1,16 @@
 import * as React from 'react';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
+// import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
+import { Link, useNavigate } from 'react-router-dom';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-
+import { SettingsRemoteOutlined } from '@mui/icons-material';
+import { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import Grid from '@mui/material/Unstable_Grid2/Grid2';
 
 export default function Breadcrumb({ type }) {
   // function handleClick(event) {
@@ -14,36 +18,37 @@ export default function Breadcrumb({ type }) {
   //   console.info('You clicked a breadcrumb.');
   // }
   const token = sessionStorage.getItem("token")
-
+const[url,setUrl]=useState([]);
   const { id } = useParams()
 
-  // useEffect(() => {
-  //   console.log({ id });
-  //   console.log("brachi");
-  //   async function fetchData() {
-  //     const response = await fetch(`http://localhost:3600/api/breadcrumb/${id}`, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'authorization': `Bearer ${token}`
-  //       },
-  //       body: JSON.stringify({ type: type })
-  //     })
+  useEffect(() => {
+    console.log({ id });
+    console.log("brachi");
+    async function fetchData() {
+      const response = await fetch(`http://localhost:3600/api/breadcrumb/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ type: type })
+      })
 
-  //     if (response.ok) {
-  //       console.log("good");
-  //       const data = await response.json();
+      if (response.ok) {
+        
+        const data = await response.json();
+        setUrl(data)
+console.log({data});
+      }
 
-  //     }
 
-
-  //     else {
-  //       console.log("err");
-  //       const err = await response.json();
-  //       console.log(err.message)
-  //     }
-  //   } fetchData();
-  // }, [])
+      else {
+        console.log("err");
+        const err = await response.json();
+        console.log(err.message)
+      }
+    } fetchData();
+  }, [])
 
 
 
@@ -71,7 +76,34 @@ export default function Breadcrumb({ type }) {
 
 
   return (
-    <h1>ffffffffff</h1>
+    <>
+
+    <Grid container spacing={1}>
+    {url.map((i) =>{
+      if(i.type===2)
+      
+        return  <Link to={`/SingleFolder/${i.id}`}>{i.name}</Link>
+    else 
+    return <Link to={`/SingleCategory/${i.id}`}>{i.name}</Link>
+    })}
+
+    </Grid></>
+    // url.map((l)=>{
+    //   if(l.type===2)
+    //   {
+    //     <Link component={RouterLink} to="/SingleFolder">
+
+    //     </Link>
+    //   }
+    //   if(l.type===1)
+    //   {
+    //     // <Link component={RouterLink} to="/SingleCategory">
+
+    //     // </Link>
+    //     <h3>t</h3>
+    //   }
+    // })
+
     // <Stack spacing={2}>
 
     //   <Breadcrumbs

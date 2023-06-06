@@ -64,9 +64,8 @@ const Categories = () => {
     {/* <Item folder={i}></Item> */ }
     return (<>
             <AddCategory addOne={add}/> 
-
        <Grid container spacing={1}>
-        {listOfCategory.map((i,ind) => <Grid item xs={4}><Item key={ind} category={i} render={renderFunc}/></Grid>)}
+        {listOfCategory.map((i,ind) => <Grid item xs={4} key={ind} ><Item key={ind} category={i} render={renderFunc}/></Grid>)}
 
         </Grid></>
     );

@@ -19,7 +19,7 @@ class CategoryDataAccessor {
         this.Category = Category;
     }
     getCategory=async(id) => {
-        const category = await Category.findAll({where: { id: 7 }})
+        const category = await Category.findAll({where: { id: id }})
         return category[0];
     }
 

@@ -21,6 +21,7 @@ export default function FolderItem(props) {
   const [clean, setClean] = useState(true);
 const [name,setName]=useState(props.folder.name)
   const navigate = useNavigate();
+  console.log("k");
   useEffect(()=>{
     const getCount = async () => {
     console.log("im in 1 ");

@@ -35,7 +35,8 @@ export default function SingleFolder(props) {
     const [userFolders, setUserFolders] = useState([]);
     const [userCategoris, setUserCategoris] = useState([]);
     const { id } = useParams()
-    const [breadcrumcs, setBreadCrumb] = useState([])
+    const [flag, setFlag] = useState()
+
     const [currentBreadCrumb, setCurrentBreadCrumb] = useState({})
     const cleanFunc = () => {
         setClean(false)
@@ -93,72 +94,15 @@ export default function SingleFolder(props) {
                 console.log(err.message)
             }
 
-        }
-        const getAllItemsForUser = async () => {
-            const allItems = await fetch(`http://localhost:3600/api/user`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'authorization': `Bearer ${token}`
-
-                }
-            })
-
-            if (allItems.ok) {
-                const data = await allItems.json();
-                console.log(data.allCategories + 'before set');
-                setUserCategoris(data.allCategories)
-                setUserFolders(data.allFolders)
-                // console.log('after set'+ userCategoris );
-            }
-
-            else {
-
-                const err = await allItems.json();
-
-                console.log(err.message)
-            }
+   
 
         }
         GetAllFoldersFiles()
-        getAllItemsForUser()
+ 
 
     }, [id])
 
-    // useEffect(() => {
-    //     console.log({ userCategoris });
-    //     console.log({ userFolders });
-    //     const folder = userFolders.find(f => f.id == id);
-    //     console.log({ folder });
-    //     if (folder) {
-    //         setBreadCrumb([folder])
-    //         setCurrentBreadCrumb(folder)
-    //     }
-    // }, [userFolders, userCategoris])
 
-    // useEffect(() => {
-    //     if (breadcrumcs.length !== 0) {
-    //         console.log(breadcrumcs.length !== 0);
-    //         console.log({ breadcrumcs });
-    //         console.log({ currentBreadCrumb });
-    //         console.log({ breadcrumcs });
-            
-
-    //         if (currentBreadCrumb.parentId_category===null) 
-    //         {
-    //             breadcrumcs.push(userFolders.find(f => f.id === currentBreadCrumb.parentId_folder))
-    //             setCurrentBreadCrumb(userFolders.find(f => f.id === currentBreadCrumb.parentId_folder))
-    //         }
-    //         breadcrumcs.push(userCategoris.find(f => f.id === currentBreadCrumb.parentId_category))
-    //         console.log(breadcrumcs.length !== 0);
-    //         console.log({ breadcrumcs });
-    //         console.log({ currentBreadCrumb });
-    //         console.log({ breadcrumcs });
-    //     }
-
-    //     else
-    //     console.log("loooooooooooooooooooooooozer");
-    // }, [currentBreadCrumb])
 
     return (
         <><h1>{id}</h1>
@@ -167,12 +111,6 @@ export default function SingleFolder(props) {
             <SearchComp />
             <AddFile onAdd={addNewFile} />
             <AddFoler onAdd={addNewFolder} fatherType='f' />
-            {/* <Grid container spacing={1}>
-                {hasFolders && listOfFolders.map((i, ind) => <Grid key={ind} item xs={4}> <FolderItem key={ind} folder={i} setGetIntoFolder={setGetIntoFolder}></FolderItem></Grid>)}
-            </Grid>
-            <Grid container spacing={1}>
-                {hasFiles&& listOfFiles.map((i, ind) => <Grid key={ind} item xs={4}><FileItem key={ind} file={i} /></Grid>) }
-            </Grid> */}
             {clean && <>{hasFolders ? listOfFolders.map((i, ind) => <Grid key={ind} item xs={4}> <FolderItem key={ind} folder={i}></FolderItem></Grid>) : <></>}
                 {hasFiles ? listOfFiles.map((i, ind) => <Grid key={ind} item xs={4}><FileItem key={ind} file={i} ></FileItem></Grid>) : <></>}</>}
 
