@@ -93,27 +93,23 @@ export default function SingleFolder(props) {
                 const err = await responseOfFolderFilse.json();
                 console.log(err.message)
             }
-
-   
-
-        }
-        GetAllFoldersFiles()
- 
-
+        };
+        GetAllFoldersFiles();
     }, [id])
 
+useEffect(()=>{
 
+},[id])
 
     return (
         <><h1>{id}</h1>
-            <Breadcrumb type={2} />
+            <Breadcrumb type={2} id={id} />
             <ResponsiveAppBar />
             <SearchComp />
             <AddFile onAdd={addNewFile} />
             <AddFoler onAdd={addNewFolder} fatherType='f' />
             {clean && <>{hasFolders ? listOfFolders.map((i, ind) => <Grid key={ind} item xs={4}> <FolderItem key={ind} folder={i}></FolderItem></Grid>) : <></>}
                 {hasFiles ? listOfFiles.map((i, ind) => <Grid key={ind} item xs={4}><FileItem key={ind} file={i} ></FileItem></Grid>) : <></>}</>}
-
         </>
     )
 }

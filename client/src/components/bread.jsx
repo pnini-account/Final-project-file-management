@@ -11,15 +11,15 @@ import { SettingsRemoteOutlined } from '@mui/icons-material';
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import Grid from '@mui/material/Unstable_Grid2/Grid2';
+import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 
-export default function Breadcrumb({ type }) {
+export default function Breadcrumb({ type,id }) {
   // function handleClick(event) {
   //   event.preventDefault();
   //   console.info('You clicked a breadcrumb.');
   // }
   const token = sessionStorage.getItem("token")
 const[url,setUrl]=useState([]);
-  const { id } = useParams()
 
   useEffect(() => {
     console.log({ id });
@@ -48,7 +48,7 @@ console.log({data});
         console.log(err.message)
       }
     } fetchData();
-  }, [])
+  }, [id])
 
 
 
@@ -82,9 +82,9 @@ console.log({data});
     {url.map((i) =>{
       if(i.type===2)
       
-        return  <Link to={`/SingleFolder/${i.id}`}>{i.name}</Link>
+        return  <Typography key="4" color="text.primary"> <Link underline="hover" key="1" color="inherit" to={`/SingleFolder/${i.id}`}><DirectionsRunIcon/>{i.name+" > "}</Link></Typography>
     else 
-    return <Link to={`/SingleCategory/${i.id}`}>{i.name}</Link>
+    return <Typography key="3" color="text.primary"><Link underline="hover" key="1" color="inherit" to={`/SingleCategory/${i.id}`}><DirectionsRunIcon/>{i.name+" > "}</Link></Typography>
     })}
 
     </Grid></>

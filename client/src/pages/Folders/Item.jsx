@@ -16,10 +16,10 @@ import { CardActionArea } from '@mui/material';
 
 export default function FolderItem(props) {
   const token = sessionStorage.getItem("token");
-  const id = props.folder.id;
+  const [id, setId] = useState(props.folder.id);
   const [count, setCount] = useState(0);
   const [clean, setClean] = useState(true);
-const [name,setName]=useState(props.folder.name)
+const [name,setName] = useState(props.folder.name)
   const navigate = useNavigate();
   console.log("k");
   useEffect(()=>{
@@ -34,27 +34,27 @@ const [name,setName]=useState(props.folder.name)
       }
     })
 
-
     if (response.ok) {
       console.log("im in 2 ");
-
       const data = await response.json();
       setCount(data.count)
     }
 
     else {
       console.log("im in 3 ");
-
       const err = await response.json();
-
       console.log(err.message)
     }
   }
-getCount()}, [])
+getCount()}, [id])
 
 const cleanF=()=>{
 setClean(false)
 }
+
+useEffect(()=>{setName(props.folder.name)},[props.folder.name]);
+useEffect(()=>{setId(props.folder.id)},[props.folder.id]);
+useEffect(()=>{setCount(props.folder.count)},[props.folder.count]);
 
 const rename=(name)=>{
 setName(name)
@@ -78,7 +78,6 @@ setName(name)
             <Typography gutterBottom variant="h5" component="div">
               {name}
             </Typography>
-
             <Typography variant="body2" color="text.secondary">
               {count}
             </Typography>

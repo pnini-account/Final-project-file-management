@@ -71,7 +71,7 @@ export default function SingleCategory(props) {
             <ResponsiveAppBar></ResponsiveAppBar>
             <SearchComp></SearchComp>
             
-            <Breadcrumb type={1}></Breadcrumb>
+            <Breadcrumb type={1} id={id}></Breadcrumb>
             {/* <AddFoler onAdd={addNewFolder}  fatherType={'c'}/>
             {/* <AddFile onAdd={addNewFile} /> */}
             <Grid container spacing={1}>
